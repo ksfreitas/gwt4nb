@@ -347,9 +347,10 @@ public class GWTWebModuleExtender extends WebModuleExtender {
                 out.println("    <head>"); // NOI18N
                 out.println("        <meta name='gwt:module' content='" + gwtOutputSubDir + "=" + gwtOutputSubDir + "'>"); // NOI18N
                 out.println("        <title>" + cls + "</title>"); // NOI18N
+                out.println("        <script type=\"text/javascript\"  src=\"" + gwtOutputSubDir + "/" + gwtOutputSubDir + ".nocache.js\"></script>"); // NOI18N
                 out.println("    </head>"); // NOI18N
                 out.println("    <body>"); // NOI18N
-                out.println("        <script type=\"text/javascript\"  src=\"" + gwtOutputSubDir + "/" + gwtOutputSubDir + ".nocache.js\"></script>"); // NOI18N
+                out.println("        <iframe src=\"javascript:''\" id=\"__gwt_historyFrame\" style=\"width:0;height:0;border:0\"></iframe>");
                 out.println("    </body>"); // NOI18N
                 out.println("</html>"); // NOI18N
             } finally {
