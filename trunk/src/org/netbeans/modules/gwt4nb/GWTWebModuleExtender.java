@@ -121,7 +121,9 @@ public class GWTWebModuleExtender extends WebModuleExtender {
             "plugins" // NOI18N
             );
     private static final String GWT_USER = "gwt-user.jar"; // NOI18N
+    private static final String GWT_SERVLET = "gwt-servlet.jar"; // NOI18N
     private static final String GWT_SERVLET_DEPS = "gwt-servlet-deps.jar"; // NOI18N
+    private static final String REQUESTFACTORY_SERVER = "requestfactory-server.jar"; // NOI18N
     private static final String PATTERN_PRJ_NAME = "__PROJECT_NAME__"; // NOI18N
     private static final String CLIENT_FOLDER = "client"; // NOI18N
     private static final String TEMPLATE_JAVA_CLASS =
@@ -932,9 +934,21 @@ public class GWTWebModuleExtender extends WebModuleExtender {
 
         final File userJar = new File(gwtFolder, GWT_USER);
         final File servletDepsJar = new File(gwtFolder, GWT_SERVLET_DEPS);
+        final File servletJar = new File(gwtFolder, GWT_SERVLET);
+        final File requestFactoryServerJar = new File(gwtFolder, REQUESTFACTORY_SERVER);
         ArrayList<URL> lib = new ArrayList<URL>();
-        lib.add(FileUtil.getArchiveRoot(Utilities.toURI(userJar).toURL()));
-        lib.add(FileUtil.getArchiveRoot(Utilities.toURI(servletDepsJar).toURL()));
+        if (userJar.exists()) {
+            lib.add(FileUtil.getArchiveRoot(Utilities.toURI(userJar).toURL()));
+        }
+        if (servletDepsJar.exists()) {
+            lib.add(FileUtil.getArchiveRoot(Utilities.toURI(servletDepsJar).toURL()));
+        }
+        if (servletJar.exists()) {
+            lib.add(FileUtil.getArchiveRoot(Utilities.toURI(servletJar).toURL()));
+        }
+        if (requestFactoryServerJar.exists()) {
+            lib.add(FileUtil.getArchiveRoot(Utilities.toURI(requestFactoryServerJar).toURL()));
+        }
 
         Map<String, List<URL>> contents = new HashMap<String, List<URL>>();
         contents.put("classpath", lib);
