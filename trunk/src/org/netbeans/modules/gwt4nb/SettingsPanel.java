@@ -72,6 +72,8 @@ public class SettingsPanel extends javax.swing.JPanel {
                 props.getProperty("gwt.shell.jvmargs")); // NOI18N
         jCheckBoxOpenBrowser.setSelected(props.getProperty("gwt.debug.openbrowser") != null
                 && props.getProperty("gwt.debug.openbrowser").equals("yes"));
+        jCheckBoxSuperDev.setSelected(props.getProperty("gwt.debug.superdev") != null
+                && props.getProperty("gwt.debug.superdev").equals("yes"));
 
         // select the newest version, if unknown
         ComboBoxModel cbm = jComboBoxGWTVersion.getModel();
@@ -145,6 +147,8 @@ public class SettingsPanel extends javax.swing.JPanel {
                 jTextFieldShellArgs.getText());
         props.setProperty("gwt.debug.openbrowser", jCheckBoxOpenBrowser.isSelected()
                 ? "yes" : "no");
+        props.setProperty("gwt.debug.superdev", jCheckBoxSuperDev.isSelected()
+                ? "yes" : "no");
     }
 
     /**
@@ -194,8 +198,11 @@ public class SettingsPanel extends javax.swing.JPanel {
         jLabelGWTTestsJVMArgs = new javax.swing.JLabel();
         jTextFieldTestsArgs = new javax.swing.JTextField();
         jCheckBoxOpenBrowser = new javax.swing.JCheckBox();
+        jCheckBoxSuperDev = new javax.swing.JCheckBox();
 
         setLayout(new java.awt.BorderLayout());
+
+        jScrollPane2.setHorizontalScrollBar(null);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(11, 11, 12, 12));
 
@@ -253,24 +260,23 @@ public class SettingsPanel extends javax.swing.JPanel {
             .add(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jLabelCompilerJVMArgs)
+                    .add(jLabelCompilerArgs)
+                    .add(jLabelCompilerOutputStyle)
+                    .add(jLabelCompilerLogLevel)
+                    .add(jLabelCompilerWorkers)
+                    .add(jLabelCompilerOutputDir))
+                .add(4, 4, 4)
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jTextFieldCompilerOutputDirectory)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jTextFieldCompilerArgs, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
+                    .add(jTextFieldCompilerJVMArgs, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
                     .add(jPanel1Layout.createSequentialGroup()
-                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jLabelCompilerJVMArgs)
-                            .add(jLabelCompilerArgs)
-                            .add(jLabelCompilerOutputStyle)
-                            .add(jLabelCompilerLogLevel)
-                            .add(jLabelCompilerWorkers))
-                        .add(64, 64, 64)
                         .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(jSpinnerCompilerWorkers, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                             .add(jComboBoxCompilerOutputStyle, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                            .add(jComboBoxCompilerLogLevel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                            .add(org.jdesktop.layout.GroupLayout.TRAILING, jTextFieldCompilerArgs, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE)
-                            .add(jTextFieldCompilerJVMArgs, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE)))
-                    .add(jPanel1Layout.createSequentialGroup()
-                        .add(jLabelCompilerOutputDir)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jTextFieldCompilerOutputDirectory, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)))
+                            .add(jComboBoxCompilerLogLevel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .add(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -367,9 +373,9 @@ public class SettingsPanel extends javax.swing.JPanel {
                     .add(jComboBoxShellLogLevel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jSpinnerShellServerPort, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jSpinnerShellPort, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jTextFieldShellJVMArgs, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE)
-                    .add(jTextFieldShellArgs, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE)
-                    .add(jTextFieldShellJVM, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE))
+                    .add(jTextFieldShellJVMArgs, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
+                    .add(jTextFieldShellArgs, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
+                    .add(jTextFieldShellJVM, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -409,8 +415,13 @@ public class SettingsPanel extends javax.swing.JPanel {
         jLabelGWTVersion.setLabelFor(jComboBoxGWTVersion);
         jLabelGWTVersion.setText(org.openide.util.NbBundle.getMessage(SettingsPanel.class, "SettingsPanel.jLabelGWTVersion.text")); // NOI18N
 
-        jComboBoxGWTVersion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1.5", "1.6", "1.7", "2.0", "2.1", "2.2", "2.3", "2.4", " " }));
+        jComboBoxGWTVersion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1.5", "1.6", "1.7", "2.0", "2.1", "2.2", "2.3", "2.4", "2.5", " " }));
         jComboBoxGWTVersion.setToolTipText(org.openide.util.NbBundle.getMessage(SettingsPanel.class, "SettingsPanel.jComboBoxGWTVersion.toolTipText")); // NOI18N
+        jComboBoxGWTVersion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxGWTVersionActionPerformed(evt);
+            }
+        });
 
         jLabelGWTTestsJVMArgs.setLabelFor(jTextFieldTestsArgs);
         jLabelGWTTestsJVMArgs.setText(org.openide.util.NbBundle.getMessage(SettingsPanel.class, "SettingsPanel.jLabelGWTTestsJVMArgs.text")); // NOI18N
@@ -419,6 +430,8 @@ public class SettingsPanel extends javax.swing.JPanel {
         jTextFieldTestsArgs.setToolTipText(org.openide.util.NbBundle.getMessage(SettingsPanel.class, "SettingsPanel.jTextFieldTestsArgs.toolTipText")); // NOI18N
 
         jCheckBoxOpenBrowser.setText(org.openide.util.NbBundle.getMessage(SettingsPanel.class, "SettingsPanel.jCheckBoxOpenBrowser.text")); // NOI18N
+
+        jCheckBoxSuperDev.setText(org.openide.util.NbBundle.getMessage(SettingsPanel.class, "SettingsPanel.jCheckBoxSuperDev.text")); // NOI18N
 
         org.jdesktop.layout.GroupLayout jPanel3Layout = new org.jdesktop.layout.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -431,10 +444,12 @@ public class SettingsPanel extends javax.swing.JPanel {
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jPanel3Layout.createSequentialGroup()
-                        .add(jTextFieldTestsArgs, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .add(jComboBoxGWTVersion, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-            .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 610, Short.MAX_VALUE)
+                        .add(jComboBoxGWTVersion, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(18, 18, 18)
+                        .add(jCheckBoxSuperDev)
+                        .add(0, 0, Short.MAX_VALUE))
+                    .add(jTextFieldTestsArgs))
+                .addContainerGap())
             .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .add(jPanel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .add(jPanel3Layout.createSequentialGroup()
@@ -442,6 +457,7 @@ public class SettingsPanel extends javax.swing.JPanel {
                     .add(jLabel1)
                     .add(jCheckBoxOpenBrowser))
                 .add(0, 0, Short.MAX_VALUE))
+            .add(jScrollPane1)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -450,27 +466,40 @@ public class SettingsPanel extends javax.swing.JPanel {
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 106, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jCheckBoxOpenBrowser)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabelGWTVersion)
-                    .add(jComboBoxGWTVersion, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(jComboBoxGWTVersion, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jCheckBoxSuperDev))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabelGWTTestsJVMArgs)
                     .add(jTextFieldTestsArgs, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jCheckBoxOpenBrowser))
+                .add(0, 0, 0))
         );
 
         jScrollPane2.setViewportView(jPanel3);
 
         add(jScrollPane2, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jComboBoxGWTVersionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxGWTVersionActionPerformed
+        boolean b = jComboBoxGWTVersion.getSelectedIndex() >= 8; // GWT ver. >= 2.5
+        
+        jCheckBoxSuperDev.setEnabled(b);
+        if (!b) {
+            jCheckBoxSuperDev.setSelected(false);
+        }
+    }//GEN-LAST:event_jComboBoxGWTVersionActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox jCheckBoxOpenBrowser;
+    private javax.swing.JCheckBox jCheckBoxSuperDev;
     private javax.swing.JComboBox jComboBoxCompilerLogLevel;
     private javax.swing.JComboBox jComboBoxCompilerOutputStyle;
     private javax.swing.JComboBox jComboBoxGWTVersion;

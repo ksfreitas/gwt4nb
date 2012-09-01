@@ -988,6 +988,11 @@ java.lang.Object
 java.util.Properties
 java.awt.event.ActionListener
 java.lang.String
+||:org.netbeans.modules.gwt4nb.SettingsPanel$1
+java.lang.Object
+org.netbeans.modules.gwt4nb.SettingsPanel
+org.netbeans.modules.gwt4nb.SettingsPanel$1
+java.awt.event.ActionListener
 ||:org.netbeans.modules.gwt4nb.hints.JavaModelUtils$1
 java.lang.Object
 javax.lang.model.type.TypeKind
@@ -2437,6 +2442,7 @@ javax.swing.DefaultComboBoxModel
 javax.swing.JPanel
 java.util.Properties
 javax.swing.ComboBoxModel
+org.netbeans.modules.gwt4nb.SettingsPanel$1
 org.netbeans.modules.gwt4nb.GWT4NBUtil
 java.lang.Integer
 org.jdesktop.layout.GroupLayout$SequentialGroup
