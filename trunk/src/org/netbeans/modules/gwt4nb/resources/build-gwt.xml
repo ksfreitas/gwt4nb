@@ -888,21 +888,6 @@ target, declare a new one with the same name in build.xml.
                 <arg value="${build.web.dir}"/>
                 
                 <arg value="${gwt.module}"/>
-                
-                
-<!--                <arg value="-logdir"/>
-                <arg value="${build.dir}/dev-mode-logs"/>
-                <arg value="-war"/>
-                <arg path="${build.web.dir}/"/>
-                <arg value="-noserver"/>
-                <arg value="-startupUrl"/>
-                <arg value="${client.url}"/>
-                <arg value="-port"/>
-                <arg value="${gwt.shell.port}"/>
-                <arg value="-codeServerPort"/>
-                <arg value="${gwt.shell.code.server.port}"/>
-                <arg line="${gwt.shell.args}"/>
-                <arg line="${gwt.module}"/>-->
             </java>
         </parallel>
     </target>
@@ -1064,6 +1049,7 @@ target, declare a new one with the same name in build.xml.
         <antcall target="debug-connect-gwt-shell-hosted-20" />
         <antcall target="debug-connect-gwt-shell-hosted-23" />
         <antcall target="debug-connect-gwt-shell-hosted-25" />
+        <antcall target="debug-connect-gwt-shell-hosted-25-super-dev" />
     </target>
 
     <!--
@@ -1235,6 +1221,61 @@ target, declare a new one with the same name in build.xml.
         </gwt.shell.java>
     </target>
 
+    <!--
+    GWT 2.5
+    Starts GWT shell with the -noserver option and attaches with Super Dev
+    the debugger to it.
+    -->
+    <target name="debug-connect-gwt-shell-hosted-25-super-dev" 
+            if="netbeans.home_and_gwt_with_super_dev.version.25" depends="init,-init-gwt-dir">
+        <nbjpdastart transport="dt_socket" addressproperty="jpda.address.gwt"
+                     name="com.google.gwt.dev.codeserver.CodeServer" stopclassname="">
+            <classpath>
+                <path path="${javac.classpath}:${src.dir}:${build.classes.dir}"/>
+            </classpath>
+        </nbjpdastart>
+
+        <property name="client.url" value="http://127.0.0.1:8080/${client.urlPart}"/>
+
+        <!-- You can override this property in the 'gwt.properties' file -->
+        <property name="gwt.shell.jvmargs" value=""/>
+        <property name="gwtshell.jvmargs.base" value="-Xdebug -Xnoagent -Djava.compiler=none -Xrunjdwp:transport=dt_socket,address=${jpda.address.gwt}"/>
+
+        <delete file="${build.dir}/dev-mode-logs/main.log" failonerror="false"/>
+        <parallel>
+            <java fork="true" classname="com.google.gwt.dev.codeserver.CodeServer" failonerror="true">
+                <jvmarg line="${gwt.shell.jvmargs}"/>
+                <jvmarg line="${gwtshell.jvmargs.base}"/>
+                <classpath>
+                    <!--
+                    GWT libraries are mentioned here explicitly so they are always
+                    at the front of the class path.
+                    -->
+                    <pathelement path="${gwt.dir}/gwt-user.jar"/>
+                    <pathelement path="${gwt.dir}/gwt-dev.jar"/>
+                    <pathelement path="${gwt.dir}/gwt-servlet.jar"/>
+                    <pathelement path="${gwt.dir}/gwt-codeserver.jar"/>
+                    <path path="${src.dir}:${javac.classpath}:${build.classes.dir}"/>
+                </classpath>
+                <syspropertyset>
+                    <propertyref prefix="run-sys-prop."/>
+                    <mapper type="glob" from="run-sys-prop.*" to="*"/>
+                </syspropertyset>
+                
+                <arg value="-bindAddress"/>
+                <arg value="127.0.0.1"/>
+                
+                <arg value="-port"/>
+                <arg value="${gwt.shell.code.server.port}"/>
+                
+                <arg value="-src"/>
+                <arg value="${build.web.dir}"/>
+                
+                <arg value="${gwt.module}"/>
+            </java>
+        </parallel>
+    </target>
+    
     <!--
     GWT 2.5
     This target can be started. Starts GWT shell without the -noserver option
