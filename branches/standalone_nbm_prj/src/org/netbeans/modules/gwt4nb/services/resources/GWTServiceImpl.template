@@ -1,0 +1,25 @@
+/*
+ * __NAME__.java
+ *
+ * Created on __DATE__, __TIME__
+ *
+ * To change this template, choose Tools | Template Manager
+ * and open the template in the editor.
+ */
+
+package Templates.Classes;
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import __CLIENT_SOURCES_ROOT__.__SERVICE_NAME__;
+
+/**
+ *
+ * @author __USER__
+ */
+public class __NAME__ extends RemoteServiceServlet implements
+    __SERVICE_NAME__ {
+
+    public String myMethod(String s) {
+        // Do something interesting with 's' here on the server.
+        return "Server says: " + s;
+    }
+}

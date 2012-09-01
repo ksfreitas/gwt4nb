@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
+<filesystem>
+    <folder name="Actions">
+        <folder name="Build">
+            <file name="org-netbeans-modules-gwt4nb-ChangeGWTSDKAction.instance"/>
+            <file name="org-netbeans-modules-gwt4nb-HostedModeAction.instance"/>
+        </folder>
+
+        <folder name="Run">
+            <file name="org-netbeans-modules-gwt4nb-RunDevGAEAction.instance"/>
+        </folder>
+
+        <folder name="Tools">
+            <file name="org-netbeans-modules-gwt4nb-services-refactoring-ui-ServiceDeleteAction.instance"/>
+            <file name="org-netbeans-modules-gwt4nb-services-refactoring-ui-ServiceRefactorSubmenuAction.instance_hidden"/>
+            <file name="org-netbeans-modules-gwt4nb-services-refactoring-ui-ServiceRenameAction.instance"/>
+            <file name="org-netbeans-modules-gwt4nb-services-refactoring-ui-ServiceRefactorAction.instance"/>
+        </folder>
+    </folder>
+
+    <folder name="Projects">
+        <folder name="Actions">
+            <file name="org-netbeans-modules-gwt4nb-RunDevGAEAction-separatorBefore.instance">
+                <attr name="instanceClass" stringvalue="javax.swing.JSeparator"/>
+                <attr name="position" intvalue="400"/>
+            </file>
+            <file name="org-netbeans-modules-gwt4nb-ChangeGWTSDKAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/Build/org-netbeans-modules-gwt4nb-ChangeGWTSDKAction.instance"/>
+                <attr name="position" intvalue="420"/>
+            </file>
+            <file name="org-netbeans-modules-gwt4nb-HostedModeAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/Build/org-netbeans-modules-gwt4nb-HostedModeAction.instance"/>
+                <attr name="position" intvalue="440"/>
+            </file>
+            <file name="org-netbeans-modules-gwt4nb-RunDevGAEAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/Run/org-netbeans-modules-gwt4nb-RunDevGAEAction.instance"/>
+                <attr name="position" intvalue="500"/>
+            </file>
+            <file name="org-netbeans-modules-gwt4nb-RunDevGAEAction-separatorAfter.instance">
+                <attr name="instanceClass" stringvalue="javax.swing.JSeparator"/>
+                <attr name="position" intvalue="550"/>
+            </file>
+        </folder>
+        <folder name="org-netbeans-modules-web-project">
+            <folder name="Customizer">
+                <file name="org-netbeans-modules-gwt4nb-SettingsPanel.instance">
+                    <attr name="instanceCreate" methodvalue="org.netbeans.modules.gwt4nb.SettingsPanelProvider.create"/>
+                    <attr name="position" intvalue="1000"/>
+                </file>
+            </folder>
+        </folder>
+    </folder>
+
+    <folder name="Editors">
+        <folder name="text">
+            <folder name="html">
+                <folder name="CodeGenerators">
+                    <file name="org-netbeans-modules-gwt4nb-UseModuleCodeGenerator$Factory.instance"/>
+                    <file name="org-netbeans-modules-gwt4nb-HistoryFrameCodeGenerator$Factory.instance"/>
+                </folder>
+            </folder>
+            <folder name="x-java">
+                <!-- the code below registers a syntax parser for .java files
+                with JSNI embedded.
+                <file name="language.instance">
+                    <attr name="instanceCreate" methodvalue="org.netbeans.modules.gwt4nb.JsniLanguage.language"/>
+                    <attr name="instanceOf" stringvalue="org.netbeans.api.lexer.Language"/>
+                </file>
+                -->
+                <folder name="Popup">
+                    <attr name="org-netbeans-modules-refactoring-api-ui-RSMEditorAction.instance/org-netbeans-modules-gwt4nb-services-refactoring-ui-ServiceRefactorAction.shadow" boolvalue="true"/>
+
+                    <file name="org-netbeans-modules-gwt4nb-services-refactoring-ui-ServiceRefactorAction.shadow">
+                        <attr name="originalFile" stringvalue="Actions/Tools/org-netbeans-modules-gwt4nb-services-refactoring-ui-ServiceRefactorAction.instance"/>
+                    </file>
+                    <attr name="org-netbeans-modules-gwt4nb-services-refactoring-ui-ServiceRefactorAction.shadow/org-netbeans-modules-uml-integration-netbeans-actions-ReverseEngineerAction.instance" boolvalue="true"/>
+
+                </folder>
+
+            </folder>
+        </folder>
+    </folder>
+    <folder name="Loaders">
+        <folder name="text">
+            <folder name="x-java">
+                <folder name="Actions">
+                    <file name="org-netbeans-modules-gwt4nb-services-refactoring-ui-ServiceRefactorAction.shadow">
+                        <attr name="originalFile" stringvalue="Actions/Tools/org-netbeans-modules-gwt4nb-services-refactoring-ui-ServiceRefactorAction.instance"/>
+                    </file>
+                </folder>
+            </folder>
+            <folder name="gwt+xml">
+                <folder name="Actions">
+                    <file name="org-openide-actions-CopyAction.instance">
+                        <attr name="position" intvalue="400"/>
+                    </file>
+                    <file name="org-openide-actions-CutAction.instance">
+                        <attr name="position" intvalue="300"/>
+                    </file>
+                    <file name="org-openide-actions-DeleteAction.instance">
+                        <attr name="position" intvalue="600"/>
+                    </file>
+                    <file name="org-openide-actions-FileSystemAction.instance">
+                        <attr name="position" intvalue="1100"/>
+                    </file>
+                    <file name="org-openide-actions-OpenAction.instance">
+                        <attr name="position" intvalue="100"/>
+                    </file>
+                    <file name="org-openide-actions-PropertiesAction.instance">
+                        <attr name="position" intvalue="1400"/>
+                    </file>
+                    <file name="org-openide-actions-RenameAction.instance">
+                        <attr name="position" intvalue="700"/>
+                    </file>
+                    <file name="org-openide-actions-SaveAsTemplateAction.instance">
+                        <attr name="position" intvalue="900"/>
+                    </file>
+                    <file name="org-openide-actions-ToolsAction.instance">
+                        <attr name="position" intvalue="1300"/>
+                    </file>
+                    <file name="sep-1.instance">
+                        <attr name="instanceClass" stringvalue="javax.swing.JSeparator"/>
+                        <attr name="position" intvalue="200"/>
+                    </file>
+                    <file name="sep-2.instance">
+                        <attr name="instanceClass" stringvalue="javax.swing.JSeparator"/>
+                        <attr name="position" intvalue="500"/>
+                    </file>
+                    <file name="sep-3.instance">
+                        <attr name="instanceClass" stringvalue="javax.swing.JSeparator"/>
+                        <attr name="position" intvalue="800"/>
+                    </file>
+                    <file name="sep-4.instance">
+                        <attr name="instanceClass" stringvalue="javax.swing.JSeparator"/>
+                        <attr name="position" intvalue="1000"/>
+                    </file>
+                    <file name="sep-5.instance">
+                        <attr name="instanceClass" stringvalue="javax.swing.JSeparator"/>
+                        <attr name="position" intvalue="1200"/>
+                    </file>
+                </folder>
+                <folder name="Factories">
+                    <file name="GwtXmlDataLoader.instance">
+                        <attr name="SystemFileSystem.icon" urlvalue="nbresloc:/org/netbeans/modules/gwt4nb/gwticon.png"/>
+                        <attr name="dataObjectClass" stringvalue="com.nanosn.netbeans.gwtxml.GwtXmlDataObject"/>
+                        <attr name="instanceCreate" methodvalue="org.openide.loaders.DataLoaderPool.factory"/>
+                        <attr name="mimeType" stringvalue="text/gwt+xml"/>
+                    </file>
+                </folder>
+            </folder>
+        </folder>
+    </folder>
+    <folder name="Menu">
+        <folder name="RunProject">
+            <file name="org-netbeans-modules-gwt4nb-HostedModeAction.shadow">
+                <attr name="SystemFileSystem.localizingBundle" stringvalue="org.netbeans.modules.gwt4nb.Bundle"/>
+                <attr name="originalFile" stringvalue="Actions/Build/org-netbeans-modules-gwt4nb-HostedModeAction.instance"/>
+                <attr name="position" intvalue="200"/>
+            </file>
+        </folder>
+    </folder>
+    <folder name="j2ee">
+        <folder name="webtier">
+            <folder name="framework">
+                <file name="org-netbeans-modules-gwt4nb-GWTFrameworkProvider.instance"/>
+            </folder>
+        </folder>
+    </folder>
+    <folder name="Templates">
+        <folder name="Classes">
+            <file name="EntryPoint.java" url="resources/EntryPoint.template">
+                <attr name="instantiatingIterator" methodvalue="org.netbeans.spi.java.project.support.ui.templates.JavaTemplates.createJavaTemplateIterator"/>
+                <attr name="templateWizardURL" urlvalue="nbresloc:/org/netbeans/modules/gwt4nb/resources/EntryPoint.html"/>
+                <attr name="SystemFileSystem.localizingBundle" stringvalue="org.netbeans.modules.gwt4nb.Bundle"/>
+                <attr name="SystemFileSystem.icon" urlvalue="nbresloc:org/netbeans/modules/gwt4nb/resources/entrypoint.gif"/>
+                <attr name="javax.script.ScriptEngine" stringvalue="freemarker"/>
+            </file>
+
+            <file name="GWTService.java" url="services/resources/GWTService.template">
+                <attr name="instantiatingIterator" methodvalue="org.netbeans.spi.java.project.support.ui.templates.JavaTemplates.createJavaTemplateIterator"/>
+                <attr name="templateCategory" stringvalue="java-classes"/>
+                <attr name="templateWizardURL" urlvalue="nbresloc:/org/netbeans/modules/gwt4nb/resources/EntryPoint.html"/>
+                <attr name="SystemFileSystem.localizingBundle" stringvalue="org.netbeans.modules.gwt4nb.Bundle"/>
+                <attr name="javax.script.ScriptEngine" stringvalue="freemarker"/>
+                <attr name="templateCategory" stringvalue="GWT-Hidden"/>
+                <attr name="simple" boolvalue="false"/>
+            </file>
+
+            <file name="GWTServiceImpl.java" url="services/resources/GWTServiceImpl.template">
+                <attr name="instantiatingIterator" methodvalue="org.netbeans.spi.java.project.support.ui.templates.JavaTemplates.createJavaTemplateIterator"/>
+                <attr name="templateCategory" stringvalue="java-classes"/>
+                <attr name="SystemFileSystem.localizingBundle" stringvalue="org.netbeans.modules.gwt4nb.Bundle"/>
+                <attr name="javax.script.ScriptEngine" stringvalue="freemarker"/>
+                <attr name="templateCategory" stringvalue="GWT-Hidden"/>
+                <attr name="simple" boolvalue="false"/>
+            </file>
+
+            <file name="GWTServiceAsync.java" url="services/resources/GWTServiceAsync.template">
+                <attr name="instantiatingIterator" methodvalue="org.netbeans.spi.java.project.support.ui.templates.JavaTemplates.createJavaTemplateIterator"/>
+                <attr name="templateCategory" stringvalue="java-classes"/>
+                <attr name="SystemFileSystem.localizingBundle" stringvalue="org.netbeans.modules.gwt4nb.Bundle"/>
+                <attr name="javax.script.ScriptEngine" stringvalue="freemarker"/>
+                <attr name="templateCategory" stringvalue="GWT-Hidden"/>
+                <attr name="simple" boolvalue="false"/>
+            </file>
+
+            <file name="GWTServiceUsageExample.java" url="services/resources/GWTServiceUsageExample.template">
+                <attr name="instantiatingIterator" methodvalue="org.netbeans.spi.java.project.support.ui.templates.JavaTemplates.createJavaTemplateIterator"/>
+                <attr name="templateCategory" stringvalue="java-classes"/>
+                <attr name="SystemFileSystem.localizingBundle" stringvalue="org.netbeans.modules.gwt4nb.Bundle"/>
+                <attr name="javax.script.ScriptEngine" stringvalue="freemarker"/>
+                <attr name="templateCategory" stringvalue="GWT-Hidden"/>
+                <attr name="simple" boolvalue="false"/>
+            </file>
+
+            <file name="UiBinder.java" url="nbresloc:/com/nanosn/netbeans/gwt4nb/uibinder/UiBinder.java.tpl">
+                <attr name="instantiatingIterator" methodvalue="org.netbeans.spi.java.project.support.ui.templates.JavaTemplates.createJavaTemplateIterator"/>
+                <attr name="templateCategory" stringvalue="java-classes"/>
+                <attr name="SystemFileSystem.localizingBundle" stringvalue="org.netbeans.modules.gwt4nb.Bundle"/>
+                <attr name="javax.script.ScriptEngine" stringvalue="freemarker"/>
+                <attr name="templateCategory" stringvalue="GWT-Hidden"/>
+                <attr name="simple" boolvalue="false"/>
+            </file>
+        </folder>
+        <folder name="GWT">
+            <attr name="position" intvalue="300"/>
+            <attr name="SystemFileSystem.localizingBundle" stringvalue="org.netbeans.modules.gwt4nb.services.Bundle"/>
+            <file name="GWT_Service">
+                <attr name="template" boolvalue="true"/>
+                <attr name="SystemFileSystem.icon" urlvalue="nbresloc:org/netbeans/modules/gwt4nb/gwticon.png"/>
+                <attr name="instantiatingIterator" methodvalue="org.netbeans.modules.gwt4nb.services.NewServiceWizardIterator.createIterator"/>
+                <attr name="instantiatingWizardURL" urlvalue="nbresloc:/org/netbeans/modules/gwt4nb/services/resources/GWTService.html"/>
+                <attr name="templateCategory" stringvalue="web-types"/>
+                <attr name="SystemFileSystem.localizingBundle" stringvalue="org.netbeans.modules.gwt4nb.services.Bundle"/>
+            </file>
+            <file name="GWT_Constants">
+                <attr name="template" boolvalue="true"/>
+                <attr name="SystemFileSystem.icon" urlvalue="nbresloc:org/netbeans/modules/gwt4nb/gwticon.png"/>
+                <attr name="instantiatingIterator" methodvalue="org.netbeans.modules.gwt4nb.NewConstantsWizardIterator.createIterator"/>
+                <attr name="instantiatingWizardURL" urlvalue="nbresloc:/org/netbeans/modules/gwt4nb/NewConstants.html"/>
+                <attr name="templateCategory" stringvalue="web-types"/>
+                <attr name="SystemFileSystem.localizingBundle" stringvalue="org.netbeans.modules.gwt4nb.Bundle"/>
+            </file>
+            <file name="GWT_Module">
+                <attr name="template" boolvalue="true"/>
+                <attr name="SystemFileSystem.icon" urlvalue="nbresloc:org/netbeans/modules/gwt4nb/gwticon.png"/>
+                <attr name="instantiatingIterator" methodvalue="org.netbeans.modules.gwt4nb.NewModuleWizardIterator.createIterator"/>
+                <attr name="instantiatingWizardURL" urlvalue="nbresloc:/org/netbeans/modules/gwt4nb/NewModule.html"/>
+                <attr name="templateCategory" stringvalue="web-types,java-classes"/>
+                <attr name="SystemFileSystem.localizingBundle" stringvalue="org.netbeans.modules.gwt4nb.Bundle"/>
+            </file>
+            <file name="Constants.java" url="Constants.java.ftl">
+                <attr name="javax.script.ScriptEngine" stringvalue="freemarker"/>
+                <attr name="simple" boolvalue="false"/>
+            </file>
+            <file name="Constants.properties" url="Constants.properties.ftl">
+                <attr name="javax.script.ScriptEngine" stringvalue="freemarker"/>
+                <attr name="simple" boolvalue="false"/>
+            </file>
+            <file name="UiBinder">
+                <attr name="displayName" bundlevalue="com.nanosn.netbeans.gwt4nb.uibinder.Bundle#Templates/GWT/UiBinder"/>
+                <attr name="instantiatingIterator" newvalue="com.nanosn.netbeans.gwt4nb.uibinder.UiBinderWizardIterator"/>
+                <attr name="SystemFileSystem.icon" urlvalue="nbresloc:org/netbeans/modules/gwt4nb/gwticon.png"/>
+                <attr name="template" boolvalue="true"/>
+                <attr name="templateWizardURL" urlvalue="nbresloc:/com/nanosn/netbeans/gwt4nb/uibinder/UiBinder.html"/>
+            </file>
+            <file name="GWTTestCase.java" url="GWTTestCase.java.ftl">
+                <attr name="javax.script.ScriptEngine" stringvalue="freemarker"/>
+                <attr name="template" boolvalue="true"/>
+                <attr name="SystemFileSystem.icon" urlvalue="nbresloc:org/netbeans/modules/gwt4nb/gwticon.png"/>
+                <attr name="SystemFileSystem.localizingBundle" stringvalue="org.netbeans.modules.gwt4nb.Bundle"/>
+                <attr name="instantiatingWizardURL" urlvalue="nbresloc:/org/netbeans/modules/gwt4nb/GWTTestCase.html"/>
+            </file>
+        </folder>
+        <folder name="Project">
+            <folder name="GWT">
+                <file name="GWTGAEProjectProject.zip" url="GWTGAEProjectProject.zip">
+                    <attr name="displayName" bundlevalue="org.netbeans.modules.gwt4nb.Bundle#Templates/Project/GWT/GWTGAEProjectProject.zip"/>
+                    <attr name="instantiatingIterator" methodvalue="org.netbeans.modules.gwt4nb.GWTGAEProjectWizardIterator.createIterator"/>
+                    <attr name="instantiatingWizardURL" urlvalue="nbresloc:/org/netbeans/modules/gwt4nb/GWTGAEProjectDescription.html"/>
+                    <attr name="template" boolvalue="true"/>
+                </file>
+            </folder>
+        </folder>
+        <folder name="xml">
+            <file name="UiBinder.ui.xml" url="nbresloc:/com/nanosn/netbeans/gwt4nb/uibinder/UiBinder.ui.xml.tpl">
+                <attr name="SystemFileSystem.icon" urlvalue="nbresloc:org/netbeans/modules/gwt4nb/gwticon.png"/>
+                <attr name="javax.script.ScriptEngine" stringvalue="freemarker"/>
+                <attr name="template" boolvalue="true"/>
+            </file>
+
+        </folder>
+    </folder>
+    <folder name="Services">
+        <folder name="MIMEResolver">
+            <file name="GwtXmlResolver.xml" url="nbresloc:/com/nanosn/netbeans/gwtxml/GwtXmlResolver.xml">
+                <attr name="SystemFileSystem.localizingBundle" stringvalue="com.nanosn.netbeans.gwtxml.Bundle"/>
+                <attr name="position" intvalue="200"/>
+            </file>
+            <file name="GwtXmlResolver.xml" url="nbresloc:/com/nanosn/netbeans/gwtxml/GwtXmlResolver.xml">
+                <attr name="SystemFileSystem.localizingBundle" stringvalue="com.nanosn.netbeans.gwtxml.Bundle"/>
+                <attr name="position" intvalue="200"/>
+            </file>
+        </folder>
+    </folder>
+    <folder name="xml">
+        <folder name="entities">
+            <folder name="Google_Inc_">
+                <file name="DTD_Google_Web_Toolkit_1_5_0" url="nbresloc:/com/nanosn/netbeans/gwtxml/dtd/gwt-module-1.5.dtd">
+                    <attr name="hint.originalPublicID" stringvalue="-//Google Inc.//DTD Google Web Toolkit 1.5.0//EN"/>
+                </file>
+                <file name="DTD_Google_Web_Toolkit_1_6_0" url="nbresloc:/com/nanosn/netbeans/gwtxml/dtd/gwt-module-1.6.dtd">
+                    <attr name="hint.originalPublicID" stringvalue="-//Google Inc.//DTD Google Web Toolkit 1.6.0//EN"/>
+                </file>
+                <file name="DTD_Google_Web_Toolkit_1_7_0" url="nbresloc:/com/nanosn/netbeans/gwtxml/dtd/gwt-module-1.7.dtd">
+                    <attr name="hint.originalPublicID" stringvalue="-//Google Inc.//DTD Google Web Toolkit 1.7.0//EN"/>
+                </file>
+                <file name="DTD_Google_Web_Toolkit_2_0_0" url="nbresloc:/com/nanosn/netbeans/gwtxml/dtd/gwt-module-2.0.dtd">
+                    <attr name="hint.originalPublicID" stringvalue="-//Google Inc.//DTD Google Web Toolkit 2.0.0//EN"/>
+                </file>
+            </folder>
+        </folder>
+    </folder>
+    <folder name="org-netbeans-modules-java-hints">
+        <folder name="rules">
+            <folder name="hints">
+                <folder name="gwt">
+                    <attr name="SystemFileSystem.localizingBundle" stringvalue="org.netbeans.modules.gwt4nb.hints.Bundle"/>
+                    <file name="org-netbeans-modules-gwt4nb-hints-UnsupportedClass.instance"/>
+                </folder>
+            </folder>
+        </folder>
+    </folder>
+    <folder name="Plugins">
+        <folder name="XML">
+            <folder name="UserCatalogs">
+                <file name="org-netbeans-modules-gwt4nb-XSDCatalog.instance">
+                    <attr name="instanceCreate" newvalue="org.netbeans.modules.gwt4nb.XSDCatalog"/>
+                    <attr name="instanceOf" stringvalue="org.netbeans.modules.xml.catalog.spi.CatalogReader"/>
+                </file>
+            </folder>
+        </folder>
+    </folder>
+</filesystem>

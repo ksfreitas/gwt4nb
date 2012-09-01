@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.1//EN" "http://www.netbeans.org/dtds/filesystem-1_1.dtd">
+<filesystem>
+    <folder name="Templates">
+        <folder name="Project">
+            <folder name="Samples">
+                <folder name="Web">
+                    <folder name="GWT">
+                        <file name="GWTAutoCompleterProject.zip" url="GWTAutoCompleterProject.zip">
+                            <attr name="SystemFileSystem.localizingBundle" stringvalue="org.netbeans.modules.gwtsamples4netbeans.Bundle"/>
+                            <attr name="instantiatingIterator" methodvalue="org.netbeans.modules.gwtsamples4netbeans.autocompleter.GWTAutoCompleterWizardIterator.createIterator"/>
+                            <attr name="instantiatingWizardURL" urlvalue="nbresloc:/org/netbeans/modules/gwtsamples4netbeans/autocompleter/GWTAutoCompleterDescription.html"/>
+                            <attr name="template" boolvalue="true"/>
+                        </file>
+                        <file name="GWTAutoFormFillerProject.zip" url="GWTAutoFormFillerProject.zip">
+                            <attr name="SystemFileSystem.localizingBundle" stringvalue="org.netbeans.modules.gwtsamples4netbeans.Bundle"/>
+                            <attr name="instantiatingIterator" methodvalue="org.netbeans.modules.gwtsamples4netbeans.autoformfiller.GWTAutoFormFillerWizardIterator.createIterator"/>
+                            <attr name="instantiatingWizardURL" urlvalue="nbresloc:/org/netbeans/modules/gwtsamples4netbeans/autoformfiller/GWTAutoFormFillerDescription.html"/>
+                            <attr name="template" boolvalue="true"/>
+                        </file>
+                        <file name="GWTDynamicListProject.zip" url="GWTDynamicListProject.zip">
+                            <attr name="SystemFileSystem.localizingBundle" stringvalue="org.netbeans.modules.gwtsamples4netbeans.Bundle"/>
+                            <attr name="instantiatingIterator" methodvalue="org.netbeans.modules.gwtsamples4netbeans.dynamiclist.GWTDynamicListWizardIterator.createIterator"/>
+                            <attr name="instantiatingWizardURL" urlvalue="nbresloc:/org/netbeans/modules/gwtsamples4netbeans/dynamiclist/GWTDynamicListDescription.html"/>
+                            <attr name="template" boolvalue="true"/>
+                        </file>
+                        <file name="GWTFlickrEditableProject.zip" url="GWTFlickrEditableProject.zip">
+                            <attr name="SystemFileSystem.localizingBundle" stringvalue="org.netbeans.modules.gwtsamples4netbeans.Bundle"/>
+                            <attr name="instantiatingIterator" methodvalue="org.netbeans.modules.gwtsamples4netbeans.flickreditable.GWTFlickrEditableWizardIterator.createIterator"/>
+                            <attr name="instantiatingWizardURL" urlvalue="nbresloc:/org/netbeans/modules/gwtsamples4netbeans/flickreditable/GWTFlickrEditableDescription.html"/>
+                            <attr name="template" boolvalue="true"/>
+                        </file>
+                        <file name="GWTHelloWorldProject.zip" url="GWTHelloWorldProject.zip">
+                            <attr name="SystemFileSystem.localizingBundle" stringvalue="org.netbeans.modules.gwtsamples4netbeans.Bundle"/>
+                            <attr name="instantiatingIterator" methodvalue="org.netbeans.modules.gwtsamples4netbeans.helloworld.GWTHelloWorldWizardIterator.createIterator"/>
+                            <attr name="instantiatingWizardURL" urlvalue="nbresloc:/org/netbeans/modules/gwtsamples4netbeans/helloworld/GWTHelloWorldDescription.html"/>
+                            <attr name="template" boolvalue="true"/>
+                        </file>
+                        <file name="GWTPasswordStrengthCheckerProject.zip" url="GWTPasswordStrengthCheckerProject.zip">
+                            <attr name="SystemFileSystem.localizingBundle" stringvalue="org.netbeans.modules.gwtsamples4netbeans.Bundle"/>
+                            <attr name="instantiatingIterator" methodvalue="org.netbeans.modules.gwtsamples4netbeans.password.GWTPasswordStrengthCheckerWizardIterator.createIterator"/>
+                            <attr name="instantiatingWizardURL" urlvalue="nbresloc:/org/netbeans/modules/gwtsamples4netbeans/password/GWTPasswordStrengthCheckerDescription.html"/>
+                            <attr name="template" boolvalue="true"/>
+                        </file>
+                        <file name="GWTSortableTableProject.zip" url="GWTSortableTableProject.zip">
+                            <attr name="SystemFileSystem.localizingBundle" stringvalue="org.netbeans.modules.gwtsamples4netbeans.Bundle"/>
+                            <attr name="instantiatingIterator" methodvalue="org.netbeans.modules.gwtsamples4netbeans.sortabletable.GWTSortableTableWizardIterator.createIterator"/>
+                            <attr name="instantiatingWizardURL" urlvalue="nbresloc:/org/netbeans/modules/gwtsamples4netbeans/sortabletable/GWTSortableTableDescription.html"/>
+                            <attr name="template" boolvalue="true"/>
+                        </file>
+                    </folder>
+                </folder>
+            </folder>
+        </folder>
+    </folder>
+</filesystem>

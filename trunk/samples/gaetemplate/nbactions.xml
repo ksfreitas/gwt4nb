@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <actionName>run</actionName>
+            <goals>
+                <goal>package</goal>
+                <goal>gae:unpack</goal>
+                <goal>gae:run</goal>
+            </goals>
+            <properties>
+                <maven.test.skip>true</maven.test.skip>
+            </properties>
+        </action>
+        <action>
+            <actionName>debug</actionName>
+            <goals>
+                <goal>package</goal>
+                <goal>gae:unpack</goal>
+                <goal>gae:debug</goal>
+            </goals>
+            <properties>
+                <netbeans.deploy.debugmode>true</netbeans.deploy.debugmode>
+            </properties>
+        </action>
+        <action>
+            <actionName>CUSTOM-Stop Local Server</actionName>
+            <displayName>Stop Local Server</displayName>
+            <goals>
+                <goal>gae:stop</goal>
+            </goals>
+        </action>
+        <action>
+            <actionName>CUSTOM-Start Local Server</actionName>
+            <displayName>Start Local Server</displayName>
+            <goals>
+                <goal>gae:start</goal>
+            </goals>
+        </action>
+    </actions>

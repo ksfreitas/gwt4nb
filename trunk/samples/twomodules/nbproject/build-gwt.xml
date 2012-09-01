@@ -1,0 +1,980 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING!
+Any manual modifications to this file will be automatically overriden each
+time the project is opened in the IDE. If you would like to override a
+target, declare a new one with the same name in build.xml.
+-->
+
+<!-- Created with GWT4NB -->
+<project name="twomodules-gwt" default="-post-compile" basedir="..">
+    <description>Generates Javascript for twomodules.</description>
+    <property file="./nbproject/gwt.properties"/>
+
+    <!--
+        Defines a new gwt.shell.java command with the specified java
+        executable
+    -->
+    <target name="-define-gwt-shell-java" if="gwt.shell.java">
+        <presetdef name="gwt.shell.java">
+            <java jvm="${gwt.shell.java}"/>
+        </presetdef>
+    </target>
+
+    <!--
+        Defines a new gwt.shell.java command with the default java
+        executable
+    -->
+    <target name="-define-gwt-shell-java-default" unless="gwt.shell.java">
+        <presetdef name="gwt.shell.java">
+            <java/>
+        </presetdef>
+    </target>
+
+    <!--
+    Check for AppEngine
+    -->
+    <condition property="use.appengine" value="true">
+        <equals arg1="${j2ee.server.type}" arg2="AppEngine"/>
+    </condition>
+
+    <!-- Fail if AppEngine Agent is not defined -->
+    <target name="is-appengine.agent-configured" unless="appengine.agent">
+        <echo message="Please set the AppEngine Agent environment variable. Add appengine.agent={path-to-appengine-installation}/lib/agent/appengine-agent.jar to the file: {path-to-this-project}/nbproject/private/private.properties"/>
+        <fail/>
+    </target>
+
+    <path id="appengine.tools.class.path" >
+        <path path="${src.dir}:${javac.classpath}:${build.classes.dir}:${j2ee.platform.classpath}"/>
+    </path>
+    
+    <!--
+    This target can be started. Starts GWT shell without the -noserver option
+    and attaches the debugger to it.
+    -->
+    <target name="gwt-devmode-on-appengine" if="netbeans.home"
+            depends="init,compile,compile-jsps,-do-compile-single-jsp,is-appengine.agent-configured">
+        <antcall target="gwt-devmode-on-appengine-20" />
+    </target>
+
+    <!--
+    GWT 2.0
+    This target can be started. Starts GWT shell without the -noserver option
+    and attaches the debugger to it.
+    -->
+    <target name="gwt-devmode-on-appengine-20"
+            if="use.appengine" depends="init,-init-gwt-dir">
+
+        <!-- Enhance everything -->
+        <taskdef
+            name="datanucleusenhancer"
+            classpathref="appengine.tools.class.path"
+            classname="org.datanucleus.enhancer.tools.EnhancerTask" />
+        <datanucleusenhancer
+            classpathref="appengine.tools.class.path"
+            failonerror="true">
+            <fileset dir="${build.web.dir}" includes="**/*.class" />
+        </datanucleusenhancer>
+
+        <java fork="true" classname="com.google.gwt.dev.DevMode">
+            <classpath>
+                <!--
+                    GWT libraries are mentioned here explicitly so they are always
+                    at the front of the class path.
+                    -->
+                <pathelement path="${gwt.dir}/gwt-user.jar"/>
+                <pathelement path="${gwt.dir}/gwt-dev.jar"/>
+                <pathelement path="${gwt.dir}/gwt-servlet.jar"/>
+                <pathelement path="${appengine.agent}" />
+                <path refid="appengine.tools.class.path"/>
+                <!--<path path="${src.dir}:${javac.classpath}:${build.classes.dir}"/>-->
+            </classpath>
+<!--            <syspropertyset>
+                <propertyref prefix="run-sys-prop."/>
+                <mapper type="glob" from="run-sys-prop.*" to="*"/>
+            </syspropertyset>-->
+            <arg value="-war"/>
+            <arg path="${build.web.dir}/"/>
+            <arg value="-logLevel"/>
+            <arg value="${gwt.shell.logLevel}"/>
+            <arg value="-logdir"/>
+            <arg value="logs"/>
+            <arg value="-startupUrl"/>
+            <arg value="/${client.urlPart}"/>
+            <arg value="-port"/>
+            <arg value="${gwt.shell.port}"/>
+            <arg value="-codeServerPort"/>
+            <arg value="${gwt.shell.code.server.port}"/>
+            <arg value="-server"/>
+            <arg value="com.google.appengine.tools.development.gwt.AppEngineLauncher"/>
+            <arg line="${gwt.module}"/>
+        </java>
+    </target>
+
+    <!--
+    Check for GWT 2.0
+    -->
+    <condition property="gwt.version.20" value="true">
+        <or>
+            <equals arg1="${gwt.version}" arg2="2.0"/>
+            <equals arg1="${gwt.version}" arg2="2.1"/>
+            <equals arg1="${gwt.version}" arg2="2.2"/>
+            <equals arg1="${gwt.version}" arg2="2.3"/>
+            <contains string="${gwt.version}" substring="2.0."/>
+        </or>
+    </condition>
+
+    <!--
+    Check for GWT 1.7
+    -->
+    <condition property="gwt.version.17" value="true">
+        <or>
+            <equals arg1="${gwt.version}" arg2="1.7"/>
+            <contains string="${gwt.version}" substring="1.7."/>
+        </or>
+    </condition>
+
+    <!--
+    Check for GWT 1.6
+    -->
+    <condition property="gwt.version.16" value="true">
+        <or>
+            <equals arg1="${gwt.version}" arg2="1.6"/>
+            <contains string="${gwt.version}" substring="1.6."/>
+        </or>
+    </condition>
+
+    <!--
+    Check for GWT 1.5
+    -->
+    <condition property="gwt.version.15" value="true">
+        <and>
+            <isfalse value="${gwt.version.16}"/>
+            <isfalse value="${gwt.version.17}"/>
+            <isfalse value="${gwt.version.20}"/>
+        </and>
+    </condition>
+
+    <!--
+    We are running inside NetBeans and GWT 1.5 is used
+    -->
+    <condition property="netbeans.home_and_gwt.version.15">
+        <and>
+            <isset property="netbeans.home"/>
+            <isset property="gwt.version.15"/>
+        </and>
+    </condition>
+
+    <!--
+    We are running inside NetBeans and GWT 1.6 is used
+    -->
+    <condition property="netbeans.home_and_gwt.version.16">
+        <and>
+            <isset property="netbeans.home"/>
+            <isset property="gwt.version.16"/>
+        </and>
+    </condition>
+
+    <!--
+    We are running inside NetBeans and GWT 1.7 is used
+    -->
+    <condition property="netbeans.home_and_gwt.version.17">
+        <and>
+            <isset property="netbeans.home"/>
+            <isset property="gwt.version.17"/>
+        </and>
+    </condition>
+
+    <!--
+    We are running inside NetBeans and GWT 2.0 is used
+    -->
+    <condition property="netbeans.home_and_gwt.version.20">
+        <and>
+            <isset property="netbeans.home"/>
+            <isset property="gwt.version.20"/>
+        </and>
+    </condition>
+
+    <!--
+    Initializes the gwt.dir property
+    -->
+    <target name="-init-gwt-dir" depends="init">
+        <property name="gwt.dir" value="${auxiliary.org-netbeans-modules-gwt4nb.GWTDir}"/>
+    </target>
+
+    <!--
+    Initializes the gwt.shell.java command
+    -->
+    <target name="-init-gwt-shell-java" depends="-define-gwt-shell-java,
+            -define-gwt-shell-java-default">
+    </target>
+
+    <!--
+    echo for the GWT installation directory.
+    -->
+    <target name="-gwt-print-dir">
+        <echo>GWT4NB https://gwt4nb.dev.java.net</echo>
+        <echo message="GWT installation directory: ${auxiliary.org-netbeans-modules-gwt4nb.GWTDir}"/>
+    </target>
+
+    <!--
+    Defines the property gwt.compile.unneeded if the output of the GWT
+    compiler does not have to be rebuilt.
+    -->
+    <target name="-gwt-define-compile-unneeded">
+        <condition property="gwt.compile.unneeded">
+            <and>
+                <available file="${build.dir}/gwtc.run"/>
+                <uptodate targetfile="${build.dir}/gwtc.run">
+                    <srcfiles dir="${src.dir}">
+                        <include name="**/client/**/*.java"/>
+                        <include name="**/client/**/*.ui.xml"/>
+                        <include name="**/shared/**/*.java"/>
+                        <include name="**/*.gwt.xml"/>
+                    </srcfiles>
+                    <srcfiles file="./nbproject/gwt.properties"/>
+                </uptodate>
+            </and>
+        </condition>
+    </target>
+
+    <!--
+    This target is automatically called by the IDE when you click on
+    "Debug" in the web project menu.
+    -->
+    <target name="debug" description="Debug project in IDE." 
+            depends="init,compile,compile-jsps,-do-compile-single-jsp"
+            if="netbeans.home">
+        <property name="gwt.compile.unneeded" value="true"/>
+        <antcall target="dist"/>
+
+        <nbdeploy debugmode="true" clientUrlPart="${client.urlPart}"/>
+        <antcall target="connect-debugger"/>
+        <antcall target="debug-connect-gwt-shell"/>
+    </target>
+
+    <target name="-pre-dist" depends="-gwt-define-compile-unneeded">
+        <antcall target="-gwt-print-dir"/>
+        <antcall target="do-gwt-compile-15" />
+        <antcall target="do-gwt-compile-16" />
+        <antcall target="do-gwt-compile-17" />
+        <antcall target="do-gwt-compile-20" />
+    </target>
+
+    <target depends="init,compile,compile-jsps,-pre-dist" name="do-dist">
+        <dirname file="${dist.war}" property="dist.jar.dir"/>
+        <mkdir dir="${dist.jar.dir}"/>
+        <jar compress="${jar.compress}" jarfile="${dist.war}" manifest="${build.meta.inf.dir}/MANIFEST.MF">
+            <fileset dir="${build.web.dir}">
+                <include name="**/*" />
+                <exclude name="**/.gwt-tmp/" />
+            </fileset>
+        </jar>
+    </target>
+
+    <!--
+    Java->JavaScript conversion (GWT 1.5)
+    -->
+    <target name="do-gwt-compile-15" if="gwt.version.15" 
+            unless="gwt.compile.unneeded" depends="-init-gwt-dir">
+        <!-- You can override this property in the 'gwt.properties' file -->
+        <property name="gwt.compiler.output.style" value="OBFUSCATED"/>
+        <property name="gwt.compiler.logLevel" value="WARN"/>
+        <echo>GWT Compiling client-side code.</echo>
+        <java failonerror="true"
+                classname="com.google.gwt.dev.GWTCompiler" fork="true"
+                jvmargs="${gwt.compiler.jvmargs}">
+            <classpath>
+                <!--
+                GWT libraries are mentioned here explicitly so they are always
+                at the front of the class path.
+                -->
+                <pathelement path="${gwt.dir}/gwt-user.jar"/>
+                <fileset dir="${gwt.dir}">
+                    <include name="gwt-dev-*.jar"/>
+                </fileset>
+                <pathelement path="${gwt.dir}/gwt-servlet.jar"/>
+                <pathelement path="${javac.classpath}"/>
+                <pathelement path="${src.dir}"/>
+                <pathelement path="${build.classes.dir}"/>
+            </classpath>
+            <arg value="-out"/>
+            <arg path="${build.web.dir}/"/>
+            <arg value="-style"/>
+            <arg value="${gwt.compiler.output.style}"/>
+            <arg value="-logLevel"/>
+            <arg value="${gwt.compiler.logLevel}"/>
+            <arg line="${gwt.compiler.args}"/>
+            <arg line="${gwt.module}"/>
+        </java>
+        
+        <property name="gwt.output.dir" value="${gwt.module}"/>
+        
+        <move todir="${build.web.dir}/${gwt.output.dir}">
+            <fileset dir="${build.web.dir}/${gwt.module}"/>
+        </move>
+        <touch file="${build.dir}/gwtc.run"/>
+    </target>
+
+    <!--
+    Java->JavaScript conversion (GWT 1.6)
+    -->
+    <target name="do-gwt-compile-16" if="gwt.version.16" 
+            unless="gwt.compile.unneeded" depends="-init-gwt-dir">
+        <!-- You can override this property in the 'gwt.properties' file -->
+        <property name="gwt.compiler.output.style" value="OBFUSCATED"/>
+        <property name="gwt.compiler.logLevel" value="WARN"/>
+        <echo>GWT Compiling client-side code.</echo>
+        <java failonerror="true"
+          classname="com.google.gwt.dev.Compiler" fork="true" 
+          jvmargs="${gwt.compiler.jvmargs}">
+            <classpath>
+                <!--
+                GWT libraries are mentioned here explicitly so they are always
+                at the front of the class path.
+                -->
+                <pathelement path="${gwt.dir}/gwt-user.jar"/>
+                <fileset dir="${gwt.dir}">
+                    <include name="gwt-dev-*.jar"/>
+                </fileset>
+                <pathelement path="${gwt.dir}/gwt-servlet.jar"/>
+                <pathelement path="${javac.classpath}"/>
+                <pathelement path="${src.dir}"/>
+                <pathelement path="${build.classes.dir}"/>
+            </classpath>
+            <arg value="-war"/>
+            <arg path="${build.web.dir}/"/>
+            <arg value="-style"/>
+            <arg value="${gwt.compiler.output.style}"/>
+            <arg value="-localWorkers"/>
+            <arg value="${gwt.compiler.local.workers}"/>
+            <arg value="-logLevel"/>
+            <arg value="${gwt.compiler.logLevel}"/>
+            <arg line="${gwt.compiler.args}"/>
+            <arg line="${gwt.module}"/>
+        </java>
+        <touch file="${build.dir}/gwtc.run"/>
+    </target>
+
+    <!--
+    Java->JavaScript conversion (GWT 1.7)
+    -->
+    <target name="do-gwt-compile-17" if="gwt.version.17" 
+            unless="gwt.compile.unneeded" depends="-init-gwt-dir">
+        <!-- You can override this property in the 'gwt.properties' file -->
+        <property name="gwt.compiler.output.style" value="OBFUSCATED"/>
+        <property name="gwt.compiler.logLevel" value="WARN"/>
+        <echo>GWT Compiling client-side code.</echo>
+        <java failonerror="true"
+          classname="com.google.gwt.dev.Compiler" fork="true"
+          jvmargs="${gwt.compiler.jvmargs}">
+            <classpath>
+                <!--
+                GWT libraries are mentioned here explicitly so they are always
+                at the front of the class path.
+                -->
+                <pathelement path="${gwt.dir}/gwt-user.jar"/>
+                <fileset dir="${gwt.dir}">
+                    <include name="gwt-dev-*.jar"/>
+                </fileset>
+                <pathelement path="${gwt.dir}/gwt-servlet.jar"/>
+                <pathelement path="${javac.classpath}"/>
+                <pathelement path="${src.dir}"/>
+                <pathelement path="${build.classes.dir}"/>
+            </classpath>
+            <arg value="-war"/>
+            <arg path="${build.web.dir}/"/>
+            <arg value="-style"/>
+            <arg value="${gwt.compiler.output.style}"/>
+            <arg value="-localWorkers"/>
+            <arg value="${gwt.compiler.local.workers}"/>
+            <arg value="-logLevel"/>
+            <arg value="${gwt.compiler.logLevel}"/>
+            <arg line="${gwt.compiler.args}"/>
+            <arg line="${gwt.module}"/>
+        </java>
+        <touch file="${build.dir}/gwtc.run"/>
+    </target>
+
+    <!--
+    Java->JavaScript conversion (GWT 2.0)
+    -->
+    <target name="do-gwt-compile-20" if="gwt.version.20" 
+            unless="gwt.compile.unneeded" depends="-init-gwt-dir">
+        <!-- You can override this property in the 'gwt.properties' file -->
+        <property name="gwt.compiler.output.style" value="OBFUSCATED"/>
+        <property name="gwt.compiler.logLevel" value="WARN"/>
+        <echo>GWT Compiling client-side code.</echo>
+        <java failonerror="true"
+          classname="com.google.gwt.dev.Compiler" fork="true"
+          jvmargs="${gwt.compiler.jvmargs}">
+            <classpath>
+                <!--
+                GWT libraries are mentioned here explicitly so they are always
+                at the front of the class path.
+                -->
+                <pathelement path="${gwt.dir}/gwt-user.jar"/>
+                <pathelement path="${gwt.dir}/gwt-dev.jar"/>
+                <pathelement path="${gwt.dir}/gwt-servlet.jar"/>
+                <pathelement path="${javac.classpath}"/>
+                <pathelement path="${src.dir}"/>
+                <pathelement path="${build.classes.dir}"/>
+            </classpath>
+            <arg value="-war"/>
+            <arg path="${build.web.dir}/"/>
+            <arg value="-style"/>
+            <arg value="${gwt.compiler.output.style}"/>
+            <arg value="-localWorkers"/>
+            <arg value="${gwt.compiler.local.workers}"/>
+            <arg value="-logLevel"/>
+            <arg value="${gwt.compiler.logLevel}"/>
+            <arg line="${gwt.compiler.args}"/>
+            <arg line="${gwt.module}"/>
+        </java>
+        <touch file="${build.dir}/gwtc.run"/>
+    </target>
+
+    <!--
+    Starts GWT shell with the -noserver option and attaches
+    the debugger to it. You can use this target if your server is not written
+    in Java, needs EJBs or similar. See also
+    http://code.google.com/support/bin/answer.py?answer=55200
+    -->
+    <target name="debug-connect-gwt-shell" if="netbeans.home" depends="init,
+            -init-gwt-shell-java">
+        <antcall target="-gwt-print-dir"/>
+        <antcall target="debug-connect-gwt-shell-15" />
+        <antcall target="debug-connect-gwt-shell-16" />
+        <antcall target="debug-connect-gwt-shell-17" />
+        <antcall target="debug-connect-gwt-shell-20" />
+    </target>
+
+    <!--
+    GWT 1.5
+    Starts GWT shell with the -noserver option and attaches
+    the debugger to it.
+    -->
+    <target name="debug-connect-gwt-shell-15" 
+            if="netbeans.home_and_gwt.version.15" depends="init,-init-gwt-dir">
+        <nbjpdastart transport="dt_socket" addressproperty="jpda.address.gwt"
+                name="com.google.gwt.dev.GWTShell" stopclassname="">
+            <classpath>
+                <path path="${javac.classpath}:${src.dir}:${build.classes.dir}"/>
+            </classpath>
+        </nbjpdastart>
+        
+        <property name="client.url" value="http://127.0.0.1:8080/${client.urlPart}"/>
+        
+        <!-- You can override this property in the 'gwt.properties' file -->
+        <property name="gwt.shell.jvmargs" value=""/>
+        <property name="gwtshell.jvmargs.base" value="-Xdebug -Xnoagent -Djava.compiler=none -Xrunjdwp:transport=dt_socket,address=${jpda.address.gwt}"/>
+        
+        <condition property="gwt.shell.jvmargs.debugger" value="${gwtshell.jvmargs.base} -XstartOnFirstThread"
+                   else="${gwtshell.jvmargs.base}">
+            <os family="mac"/>
+        </condition>
+
+        <property name="gwt.shell.java" value="${java.home}/bin/java"/>
+        
+        <gwt.shell.java fork="true" classname="com.google.gwt.dev.GWTShell" failonerror="true">
+            <jvmarg line="${gwt.shell.jvmargs}"/>
+            <jvmarg line="${gwt.shell.jvmargs.debugger}"/>
+            <classpath>
+                <!--
+                GWT libraries are mentioned here explicitly so they are always
+                at the front of the class path.
+                -->
+                <pathelement path="${gwt.dir}/gwt-user.jar"/>
+                <fileset dir="${gwt.dir}">
+                    <include name="gwt-dev-*.jar"/>
+                </fileset>
+                <pathelement path="${gwt.dir}/gwt-servlet.jar"/>
+                <path path="${src.dir}:${javac.classpath}:${build.classes.dir}"/>
+            </classpath>
+            <syspropertyset>
+                <propertyref prefix="run-sys-prop."/>
+                <mapper type="glob" from="run-sys-prop.*" to="*"/>
+            </syspropertyset>
+            <arg value="-out"/>
+            <arg path="${build.web.dir}/"/>
+            <arg value="-noserver"/>
+            <arg value="${client.url}"/>
+            <arg line="${gwt.shell.args}"/>
+        </gwt.shell.java>
+    </target>
+    
+    <!--
+    GWT 1.6
+    Starts GWT shell with the -noserver option and attaches
+    the debugger to it.
+    -->
+    <target name="debug-connect-gwt-shell-16" 
+            if="netbeans.home_and_gwt.version.16" depends="init,-init-gwt-dir">
+        <nbjpdastart transport="dt_socket" addressproperty="jpda.address.gwt"
+                name="com.google.gwt.dev.HostedMode" stopclassname="">
+            <classpath>
+                <path path="${javac.classpath}:${src.dir}:${build.classes.dir}"/>
+            </classpath>
+        </nbjpdastart>
+
+        <property name="client.url" value="http://127.0.0.1:8080/${client.urlPart}"/>
+        
+        <!-- You can override this property in the 'gwt.properties' file -->
+        <property name="gwt.shell.jvmargs" value=""/>
+        <property name="gwtshell.jvmargs.base" value="-Xdebug -Xnoagent -Djava.compiler=none -Xrunjdwp:transport=dt_socket,address=${jpda.address.gwt}"/>
+
+        <condition property="gwt.shell.jvmargs.debugger" value="${gwtshell.jvmargs.base} -XstartOnFirstThread"
+                   else="${gwtshell.jvmargs.base}">
+            <os family="mac"/>
+        </condition>
+
+        <gwt.shell.java fork="true" classname="com.google.gwt.dev.HostedMode" failonerror="true">
+            <jvmarg line="${gwt.shell.jvmargs}"/>
+            <jvmarg line="${gwt.shell.jvmargs.debugger}"/>
+            <classpath>
+                <!--
+                GWT libraries are mentioned here explicitly so they are always
+                at the front of the class path.
+                -->
+                <pathelement path="${gwt.dir}/gwt-user.jar"/>
+                <fileset dir="${gwt.dir}">
+                    <include name="gwt-dev-*.jar"/>
+                </fileset>
+                <pathelement path="${gwt.dir}/gwt-servlet.jar"/>
+                <path path="${src.dir}:${javac.classpath}:${build.classes.dir}"/>
+            </classpath>
+            <syspropertyset>
+                <propertyref prefix="run-sys-prop."/>
+                <mapper type="glob" from="run-sys-prop.*" to="*"/>
+            </syspropertyset>
+            <arg value="-war"/>
+            <arg path="${build.web.dir}/"/>
+            <arg value="-noserver"/>
+            <arg value="-startupUrl"/>
+            <arg value="${client.url}"/>
+            <arg line="${gwt.shell.args}"/>
+            <arg line="${gwt.module}"/>
+        </gwt.shell.java>
+    </target>
+
+    <!--
+    GWT 1.7
+    Starts GWT shell with the -noserver option and attaches
+    the debugger to it.
+    -->
+    <target name="debug-connect-gwt-shell-17" 
+            if="netbeans.home_and_gwt.version.17" depends="init,-init-gwt-dir">
+        <nbjpdastart transport="dt_socket" addressproperty="jpda.address.gwt"
+                name="com.google.gwt.dev.HostedMode" stopclassname="">
+            <classpath>
+                <path path="${javac.classpath}:${src.dir}:${build.classes.dir}"/>
+            </classpath>
+        </nbjpdastart>
+
+        <property name="client.url" value="http://127.0.0.1:8080/${client.urlPart}"/>
+
+        <!-- You can override this property in the 'gwt.properties' file -->
+        <property name="gwt.shell.jvmargs" value=""/>
+        <property name="gwtshell.jvmargs.base" value="-Xdebug -Xnoagent -Djava.compiler=none -Xrunjdwp:transport=dt_socket,address=${jpda.address.gwt}"/>
+
+        <condition property="gwt.shell.jvmargs.debugger" value="${gwtshell.jvmargs.base} -XstartOnFirstThread"
+                   else="${gwtshell.jvmargs.base}">
+            <os family="mac"/>
+        </condition>
+
+        <gwt.shell.java fork="true" classname="com.google.gwt.dev.HostedMode" failonerror="true">
+            <jvmarg line="${gwt.shell.jvmargs}"/>
+            <jvmarg line="${gwt.shell.jvmargs.debugger}"/>
+            <classpath>
+                <!--
+                GWT libraries are mentioned here explicitly so they are always
+                at the front of the class path.
+                -->
+                <pathelement path="${gwt.dir}/gwt-user.jar"/>
+                <fileset dir="${gwt.dir}">
+                    <include name="gwt-dev-*.jar"/>
+                </fileset>
+                <pathelement path="${gwt.dir}/gwt-servlet.jar"/>
+                <path path="${src.dir}:${javac.classpath}:${build.classes.dir}"/>
+            </classpath>
+            <syspropertyset>
+                <propertyref prefix="run-sys-prop."/>
+                <mapper type="glob" from="run-sys-prop.*" to="*"/>
+            </syspropertyset>
+            <arg value="-war"/>
+            <arg path="${build.web.dir}/"/>
+            <arg value="-noserver"/>
+            <arg value="-startupUrl"/>
+            <arg value="${client.url}"/>
+            <arg line="${gwt.shell.args}"/>
+            <arg line="${gwt.module}"/>
+        </gwt.shell.java>
+    </target>
+
+    <!--
+    GWT 2.0
+    Starts GWT shell with the -noserver option and attaches
+    the debugger to it.
+    -->
+    <target name="debug-connect-gwt-shell-20" 
+            if="netbeans.home_and_gwt.version.20" depends="init,-init-gwt-dir">
+        <nbjpdastart transport="dt_socket" addressproperty="jpda.address.gwt"
+                name="com.google.gwt.dev.HostedMode" stopclassname="">
+            <classpath>
+                <path path="${javac.classpath}:${src.dir}:${build.classes.dir}"/>
+            </classpath>
+        </nbjpdastart>
+
+        <property name="client.url" value="http://127.0.0.1:8080/${client.urlPart}"/>
+
+        <!-- You can override this property in the 'gwt.properties' file -->
+        <property name="gwt.shell.jvmargs" value=""/>
+        <property name="gwtshell.jvmargs.base" value="-Xdebug -Xnoagent -Djava.compiler=none -Xrunjdwp:transport=dt_socket,address=${jpda.address.gwt}"/>
+
+        <delete file="${build.dir}/dev-mode-logs/main.log" failonerror="false"/>
+        <parallel>
+            <gwt.shell.java fork="true" classname="com.google.gwt.dev.DevMode" failonerror="true">
+                <jvmarg line="${gwt.shell.jvmargs}"/>
+                <jvmarg line="${gwtshell.jvmargs.base}"/>
+                <classpath>
+                    <!--
+                    GWT libraries are mentioned here explicitly so they are always
+                    at the front of the class path.
+                    -->
+                    <pathelement path="${gwt.dir}/gwt-user.jar"/>
+                    <pathelement path="${gwt.dir}/gwt-dev.jar"/>
+                    <pathelement path="${gwt.dir}/gwt-servlet.jar"/>
+                    <path path="${src.dir}:${javac.classpath}:${build.classes.dir}"/>
+                </classpath>
+                <syspropertyset>
+                    <propertyref prefix="run-sys-prop."/>
+                    <mapper type="glob" from="run-sys-prop.*" to="*"/>
+                </syspropertyset>
+                <arg value="-logdir"/>
+                <arg value="${build.dir}/dev-mode-logs"/>
+                <arg value="-war"/>
+                <arg path="${build.web.dir}/"/>
+                <arg value="-noserver"/>
+                <arg value="-startupUrl"/>
+                <arg value="${client.url}"/>
+                <arg value="-port"/>
+                <arg value="${gwt.shell.port}"/>
+                <arg value="-codeServerPort"/>
+                <arg value="${gwt.shell.code.server.port}"/>
+                <arg line="${gwt.shell.args}"/>
+                <arg line="${gwt.module}"/>
+            </gwt.shell.java>
+            <sequential>
+                <antcall target="-wait-for-shell-url"/>
+                <antcall target="-wait-for-shell-url"/>
+                <antcall target="-wait-for-shell-url"/>
+                <antcall target="-wait-for-shell-url"/>
+                <antcall target="-wait-for-shell-url"/>
+                <antcall target="-wait-for-shell-url"/>
+                <antcall target="-wait-for-shell-url"/>
+                <antcall target="-wait-for-shell-url"/>
+                <antcall target="-wait-for-shell-url"/>
+                <antcall target="-wait-for-shell-url"/>
+                <nbbrowse url="${client.url}?gwt.codesvr=127.0.0.1:${gwt.shell.code.server.port}"/>
+            </sequential>
+        </parallel>
+    </target>
+
+    <!--
+    This target can be started. Starts GWT shell without the -noserver option
+    and attaches the debugger to it.
+    -->
+    <target name="debug-connect-gwt-shell-hosted" if="netbeans.home"
+            depends="init,compile,compile-jsps,-do-compile-single-jsp,
+            -init-gwt-shell-java">
+        <antcall target="-gwt-print-dir"/>
+        <antcall target="debug-connect-gwt-shell-hosted-15" />
+        <antcall target="debug-connect-gwt-shell-hosted-16" />
+        <antcall target="debug-connect-gwt-shell-hosted-17" />
+        <antcall target="debug-connect-gwt-shell-hosted-20" />
+    </target>
+
+    <!--
+    GWT 1.5
+    This target can be started. Starts GWT shell without the -noserver option
+    and attaches the debugger to it.
+    -->
+    <target name="debug-connect-gwt-shell-hosted-15" 
+            if="netbeans.home_and_gwt.version.15" depends="init,-init-gwt-dir">
+        <nbjpdastart transport="dt_socket" addressproperty="jpda.address.gwt" name="com.google.gwt.dev.GWTShell" stopclassname="">
+            <classpath>
+                <path path="${javac.classpath}:${src.dir}"/>
+            </classpath>
+            <sourcepath>
+                <path path="${src.dir}"/>
+            </sourcepath>
+        </nbjpdastart>
+
+        <!-- You can override this property in the 'gwt.properties' file -->
+        <property name="gwt.shell.output.style" value="OBFUSCATED"/>
+        <property name="gwt.shell.logLevel" value="WARN"/>
+        <property name="gwtshell.jvmargs.base" value="-Xdebug -Xnoagent -Djava.compiler=none -Xrunjdwp:transport=dt_socket,address=${jpda.address.gwt}"/>
+        <condition property="gwt.shell.jvmargs.debugger" value="${gwtshell.jvmargs.base} -XstartOnFirstThread"
+                   else="${gwtshell.jvmargs.base}">
+            <os family="mac"/>
+        </condition>
+
+        <gwt.shell.java fork="true" classname="com.google.gwt.dev.GWTShell">
+            <jvmarg line="${gwt.shell.jvmargs}"/>
+            <jvmarg line="${gwt.shell.jvmargs.debugger}" />
+            <classpath>
+                <!--
+                GWT libraries are mentioned here explicitly so they are always
+                at the front of the class path.
+                -->
+                <pathelement path="${gwt.dir}/gwt-user.jar"/>
+                <fileset dir="${gwt.dir}">
+                    <include name="gwt-dev-*.jar"/>
+                </fileset>
+                <pathelement path="${gwt.dir}/gwt-servlet.jar"/>
+                <path path="${src.dir}:${javac.classpath}:${build.classes.dir}"/>
+            </classpath>
+            <syspropertyset>
+                <propertyref prefix="run-sys-prop."/>
+                <mapper type="glob" from="run-sys-prop.*" to="*"/>
+            </syspropertyset>
+            <arg value="-out"/>
+            <arg path="${build.web.dir}/"/>
+            <arg value="-style"/>
+            <arg value="${gwt.shell.output.style}"/>
+            <arg value="-logLevel"/>
+            <arg value="${gwt.shell.logLevel}"/>
+            <arg line="${gwt.shell.args}"/>
+            <arg value="${gwt.module}"/>
+        </gwt.shell.java>
+    </target>
+
+    <!--
+    GWT 1.6
+    This target can be started. Starts GWT shell without the -noserver option
+    and attaches the debugger to it.
+    -->
+    <target name="debug-connect-gwt-shell-hosted-16" 
+            if="netbeans.home_and_gwt.version.16" depends="init,-init-gwt-dir">
+        <nbjpdastart transport="dt_socket" addressproperty="jpda.address.gwt" name="com.google.gwt.dev.GWTShell" stopclassname="">
+            <classpath>
+                <path path="${javac.classpath}:${src.dir}"/>
+            </classpath>
+            <sourcepath>
+                <path path="${src.dir}"/>
+            </sourcepath>
+        </nbjpdastart>
+
+        <!-- You can override this property in the 'gwt.properties' file -->
+        <property name="gwt.shell.output.style" value="OBFUSCATED"/>
+        <property name="gwt.shell.logLevel" value="WARN"/>
+        <property name="gwtshell.jvmargs.base" value="-Xdebug -Xnoagent -Djava.compiler=none -Xrunjdwp:transport=dt_socket,address=${jpda.address.gwt}"/>
+        <condition property="gwt.shell.jvmargs.debugger" value="${gwtshell.jvmargs.base} -XstartOnFirstThread"
+                   else="${gwtshell.jvmargs.base}">
+            <os family="mac"/>
+        </condition>
+        
+        <gwt.shell.java fork="true" classname="com.google.gwt.dev.HostedMode">
+            <jvmarg line="${gwt.shell.jvmargs}"/>
+            <jvmarg line="${gwt.shell.jvmargs.debugger}" />
+            <classpath>
+                <!--
+                GWT libraries are mentioned here explicitly so they are always
+                at the front of the class path.
+                -->
+                <pathelement path="${gwt.dir}/gwt-user.jar"/>
+                <fileset dir="${gwt.dir}">
+                    <include name="gwt-dev-*.jar"/>
+                </fileset>
+                <pathelement path="${gwt.dir}/gwt-servlet.jar"/>
+                <path path="${src.dir}:${javac.classpath}:${build.classes.dir}"/>
+            </classpath>
+            <syspropertyset>
+                <propertyref prefix="run-sys-prop."/>
+                <mapper type="glob" from="run-sys-prop.*" to="*"/>
+            </syspropertyset>
+            <arg value="-war"/>
+            <arg path="${build.web.dir}/"/>
+            <arg value="-style"/>
+            <arg value="${gwt.shell.output.style}"/>
+            <arg value="-logLevel"/>
+            <arg value="${gwt.shell.logLevel}"/>
+            <arg value="-startupUrl"/>
+            <arg value="/${client.urlPart}"/>
+            <arg line="${gwt.shell.args}"/>
+            <arg line="${gwt.module}"/>
+        </gwt.shell.java>
+    </target>
+
+    <!--
+    GWT 1.7
+    This target can be started. Starts GWT shell without the -noserver option
+    and attaches the debugger to it.
+    -->
+    <target name="debug-connect-gwt-shell-hosted-17" 
+            if="netbeans.home_and_gwt.version.17" depends="init,-init-gwt-dir">
+        <nbjpdastart transport="dt_socket" addressproperty="jpda.address.gwt" name="com.google.gwt.dev.GWTShell" stopclassname="">
+            <classpath>
+                <path path="${javac.classpath}:${src.dir}"/>
+            </classpath>
+            <sourcepath>
+                <path path="${src.dir}"/>
+            </sourcepath>
+        </nbjpdastart>
+
+        <!-- You can override this property in the 'gwt.properties' file -->
+        <property name="gwt.shell.output.style" value="OBFUSCATED"/>
+        <property name="gwt.shell.logLevel" value="WARN"/>
+        <property name="gwtshell.jvmargs.base" value="-Xdebug -Xnoagent -Djava.compiler=none -Xrunjdwp:transport=dt_socket,address=${jpda.address.gwt}"/>
+        <condition property="gwt.shell.jvmargs.debugger" value="${gwtshell.jvmargs.base} -XstartOnFirstThread"
+                   else="${gwtshell.jvmargs.base}">
+            <os family="mac"/>
+        </condition>
+
+        <gwt.shell.java fork="true" classname="com.google.gwt.dev.HostedMode">
+            <jvmarg line="${gwt.shell.jvmargs}"/>
+            <jvmarg line="${gwt.shell.jvmargs.debugger}" />
+            <classpath>
+                <!--
+                GWT libraries are mentioned here explicitly so they are always
+                at the front of the class path.
+                -->
+                <pathelement path="${gwt.dir}/gwt-user.jar"/>
+                <fileset dir="${gwt.dir}">
+                    <include name="gwt-dev-*.jar"/>
+                </fileset>
+                <pathelement path="${gwt.dir}/gwt-servlet.jar"/>
+                <path path="${src.dir}:${javac.classpath}:${build.classes.dir}"/>
+            </classpath>
+            <syspropertyset>
+                <propertyref prefix="run-sys-prop."/>
+                <mapper type="glob" from="run-sys-prop.*" to="*"/>
+            </syspropertyset>
+            <arg value="-war"/>
+            <arg path="${build.web.dir}/"/>
+            <arg value="-style"/>
+            <arg value="${gwt.shell.output.style}"/>
+            <arg value="-logLevel"/>
+            <arg value="${gwt.shell.logLevel}"/>
+            <arg value="-startupUrl"/>
+            <arg value="/${client.urlPart}"/>
+            <arg line="${gwt.shell.args}"/>
+            <arg line="${gwt.module}"/>
+        </gwt.shell.java>
+    </target>
+
+    <!--
+    GWT 2.0
+    This target can be started. Starts GWT shell without the -noserver option
+    and attaches the debugger to it.
+    -->
+    <target name="debug-connect-gwt-shell-hosted-20" 
+            if="netbeans.home_and_gwt.version.20" depends="init,-init-gwt-dir">
+        <nbjpdastart transport="dt_socket" addressproperty="jpda.address.gwt" name="com.google.gwt.dev.GWTShell" stopclassname="">
+            <classpath>
+                <path path="${javac.classpath}:${src.dir}"/>
+            </classpath>
+            <sourcepath>
+                <path path="${src.dir}"/>
+            </sourcepath>
+        </nbjpdastart>
+
+        <!-- You can override this property in the 'gwt.properties' file -->
+        <property name="gwt.shell.logLevel" value="WARN"/>
+        <property name="gwtshell.jvmargs.base" value="-Xdebug -Xnoagent -Djava.compiler=none -Xrunjdwp:transport=dt_socket,address=${jpda.address.gwt}"/>
+
+        <delete file="${build.dir}/dev-mode-logs/main.log" failonerror="false"/>
+        <parallel>
+            <gwt.shell.java fork="true" classname="com.google.gwt.dev.DevMode">
+                <jvmarg line="${gwt.shell.jvmargs}"/>
+                <jvmarg line="${gwtshell.jvmargs.base}" />
+                <classpath>
+                    <!--
+                    GWT libraries are mentioned here explicitly so they are always
+                    at the front of the class path.
+                    -->
+                    <pathelement path="${gwt.dir}/gwt-user.jar"/>
+                    <pathelement path="${gwt.dir}/gwt-dev.jar"/>
+                    <pathelement path="${gwt.dir}/gwt-servlet.jar"/>
+                    <path path="${src.dir}:${javac.classpath}:${build.classes.dir}"/>
+                </classpath>
+                <syspropertyset>
+                    <propertyref prefix="run-sys-prop."/>
+                    <mapper type="glob" from="run-sys-prop.*" to="*"/>
+                </syspropertyset>
+                <arg value="-war"/>
+                <arg path="${build.web.dir}/"/>
+                <arg value="-logLevel"/>
+                <arg value="${gwt.shell.logLevel}"/>
+                <arg value="-logdir"/>
+                <arg value="${build.dir}/dev-mode-logs"/>
+                <arg value="-startupUrl"/>
+                <arg value="/${client.urlPart}"/>
+                <arg value="-port"/>
+                <arg value="${gwt.shell.port}"/>
+                <arg value="-codeServerPort"/>
+                <arg value="${gwt.shell.code.server.port}"/>
+                <arg line="${gwt.shell.args}"/>
+                <arg line="${gwt.module}"/>
+            </gwt.shell.java>
+            <sequential>
+                <antcall target="-wait-for-shell-url"/>
+                <antcall target="-wait-for-shell-url"/>
+                <antcall target="-wait-for-shell-url"/>
+                <antcall target="-wait-for-shell-url"/>
+                <antcall target="-wait-for-shell-url"/>
+                <antcall target="-wait-for-shell-url"/>
+                <antcall target="-wait-for-shell-url"/>
+                <antcall target="-wait-for-shell-url"/>
+                <antcall target="-wait-for-shell-url"/>
+                <antcall target="-wait-for-shell-url"/>
+                <nbbrowse url="http://127.0.0.1:${gwt.shell.port}/${client.urlPart}?gwt.codesvr=127.0.0.1:${gwt.shell.code.server.port}"/>
+            </sequential>
+        </parallel>
+    </target>
+
+    <target name="-init-macrodef-junit">
+        <macrodef name="junit" uri="http://www.netbeans.org/ns/web-project/2">
+            <attribute default="${includes}" name="includes"/>
+            <attribute default="${excludes}" name="excludes"/>
+            <attribute default="**" name="testincludes"/>
+            <sequential>
+                <junit dir="${basedir}" errorproperty="tests.failed" failureproperty="tests.failed" fork="true" showoutput="true" tempdir="${java.io.tmpdir}">
+                    <batchtest todir="${build.test.results.dir}">
+                        <fileset dir="${test.src.dir}" excludes="@{excludes},${excludes}" includes="@{includes}">
+                            <filename name="@{testincludes}"/>
+                        </fileset>
+                    </batchtest>
+                    <classpath>
+                        <path path="${run.test.classpath}:${j2ee.platform.classpath}:${j2ee.platform.embeddableejb.classpath}:${test.src.dir}:${src.dir}"/>
+                    </classpath>
+                    <syspropertyset>
+                        <propertyref prefix="test-sys-prop."/>
+                        <mapper from="test-sys-prop.*" to="*" type="glob"/>
+                    </syspropertyset>
+                    <formatter type="brief" usefile="false"/>
+                    <formatter type="xml"/>
+                    <jvmarg line="${endorsed.classpath.cmd.line.arg}"/>
+                    <jvmarg line="${gwt.test.jvmargs}"/>
+                </junit>
+            </sequential>
+        </macrodef>
+    </target>
+
+    <target name="-check-shell-url">
+        <available property="got.dev.mode.output" 
+                file="${build.dir}/dev-mode-logs/main.log"/>
+    </target>
+
+    <target name="-wait-for-shell-url" depends="-check-shell-url" unless="got.dev.mode.output">
+        <echo>Waiting for the output from the GWT dev mode...</echo>
+        <sleep seconds="2"/>
+    </target>
+
+    <target name="-no-shell-url" depends="-check-shell-url" unless="got.dev.mode.output">
+        <echo level="error">GWT dev mode did not produce the expected output.</echo>
+        <echo level="error">Perhaps it failed or still starting up.</echo>
+        <echo level="error">You can navigate a browser manually if/when the shell is ready.</echo>
+    </target>
+</project>

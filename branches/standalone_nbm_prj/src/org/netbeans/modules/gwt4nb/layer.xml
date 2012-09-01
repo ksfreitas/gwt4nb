@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+The contents of this file are subject to the terms of the Common Development
+and Distribution License (the License). You may not use this file except in
+compliance with the License.
+
+You can obtain a copy of the License at http://www.netbeans.org/cddl.html
+or http://www.netbeans.org/cddl.txt.
+
+When distributing Covered Code, include this CDDL Header Notice in each file
+and include the License file at http://www.netbeans.org/cddl.txt.
+If applicable, add the following below the CDDL Header, with the fields
+enclosed by brackets [] replaced by your own identifying information:
+"Portions Copyrighted [year] [name of copyright owner]"
+
+The Original Software is NetBeans. The Initial Developer of the Original
+Software is Sun Microsystems, Inc. Portions Copyright 1997-2006 Sun
+Microsystems, Inc. All Rights Reserved.
+-->
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.1//EN" "http://www.netbeans.org/dtds/filesystem-1_1.dtd">
+<filesystem>
+    
+    <folder name="Actions">
+        <folder name="Build">
+            <file name="org-netbeans-modules-gwt4nb-HostedModeAction.instance"/>
+        </folder>
+        
+        
+        <folder name="Tools">
+            <file name="org-netbeans-modules-gwt4nb-services-refactoring-ui-ServiceDeleteAction.instance"/>
+            <file name="org-netbeans-modules-gwt4nb-services-refactoring-ui-ServiceRefactorSubmenuAction.instance_hidden"/>
+            <file name="org-netbeans-modules-gwt4nb-services-refactoring-ui-ServiceRenameAction.instance"/>
+            <file name="org-netbeans-modules-gwt4nb-services-refactoring-ui-ServiceRefactorAction.instance"/>
+        </folder>
+    </folder>
+    
+    
+    <folder name="Editors">
+        <folder name="text">
+            <folder name="x-java">
+                <folder name="Popup">
+                    <attr name="org-netbeans-modules-refactoring-api-ui-RSMEditorAction.instance/org-netbeans-modules-gwt4nb-services-refactoring-ui-ServiceRefactorAction.shadow" boolvalue="true"/>
+                    
+                    <file name="org-netbeans-modules-gwt4nb-services-refactoring-ui-ServiceRefactorAction.shadow">
+                        <attr name="originalFile" stringvalue="Actions/Tools/org-netbeans-modules-gwt4nb-services-refactoring-ui-ServiceRefactorAction.instance"/>
+                    </file>
+                    <attr name="org-netbeans-modules-gwt4nb-services-refactoring-ui-ServiceRefactorAction.shadow/org-netbeans-modules-uml-integration-netbeans-actions-ReverseEngineerAction.instance" boolvalue="true"/>
+                    
+                </folder>
+            </folder>
+        </folder>
+    </folder>
+    <folder name="Loaders">
+        <folder name="text">
+            <folder name="x-java">
+                <folder name="Actions">
+                    <file name="org-netbeans-modules-gwt4nb-services-refactoring-ui-ServiceRefactorAction.shadow">
+                        <attr name="originalFile" stringvalue="Actions/Tools/org-netbeans-modules-gwt4nb-services-refactoring-ui-ServiceRefactorAction.instance"/>
+                    </file>
+                </folder>
+            </folder>
+        </folder>
+    </folder>
+    <folder name="Menu">
+    <folder name="RunProject">
+        <attr name="SeparatorRun.instance/org-netbeans-modules-gwt4nb-HostedModeAction.shadow" boolvalue="false"/>
+        <attr name="org-netbeans-modules-gwt4nb-separatorAfter.instance/org-netbeans-modules-debugger-ui-actions-ConnectAction.shadow" boolvalue="true"/>
+        <attr name="org-netbeans-modules-project-ui-DebugMainProject.shadow/org-netbeans-modules-gwt4nb-HostedModeAction.shadow" boolvalue="true"/>
+        <file name="org-netbeans-modules-gwt4nb-HostedModeAction.shadow" url="org-netbeans-modules-gwt4nb-HostedModeAction_1.shadow">
+            <attr name="SystemFileSystem.localizingBundle" stringvalue="org.netbeans.modules.gwt4nb.Bundle"/>
+            <attr name="originalFile" stringvalue="Actions/Build/org-netbeans-modules-gwt4nb-HostedModeAction.instance"/>
+        </file>
+        <attr name="org-netbeans-modules-gwt4nb-HostedModeAction.shadow/org-netbeans-modules-gwt4nb-separatorAfter.instance" boolvalue="true"/>
+        <attr name="org-netbeans-modules-gwt4nb-HostedModeAction.shadow/org-netbeans-modules-project-ui-TestProject.shadow" boolvalue="true"/>
+        <attr name="org-netbeans-modules-project-ui-TestProject.shadow/RunOther" boolvalue="true"/>
+        <folder name="RunOther"/>
+            <attr name="RunOther/SeparatorRun.instance" boolvalue="true"/>
+            <file name="org-netbeans-modules-gwt4nb-separatorAfter.instance_hidden"/>
+        </folder>
+    </folder>
+    <folder name="j2ee">
+        <folder name="webtier">
+            <folder name="framework">
+                <file name="org-netbeans-modules-gwt4nb-GWTFrameworkProvider.instance"/> 
+            </folder>
+        </folder>
+    </folder>
+    <folder name="Templates">
+        <folder name="Classes">
+            <attr name="Class.java/EntryPoint.java" boolvalue="true"/>
+            <attr name="Empty.java/EntryPoint.java" boolvalue="true"/>
+            <attr name="Interface.java/EntryPoint.java" boolvalue="true"/>
+            <attr name="Enum.java/EntryPoint.java" boolvalue="true"/>
+            <attr name="AnnotationType.java/EntryPoint.java" boolvalue="true"/>
+            <attr name="Exception.java/EntryPoint.java" boolvalue="true"/>
+            <attr name="Main.java/EntryPoint.java" boolvalue="true"/>
+            <attr name="package-info.java/EntryPoint.java" boolvalue="true"/>
+            <attr name="JApplet.java/EntryPoint.java" boolvalue="true"/>
+            <attr name="Applet.java/EntryPoint.java" boolvalue="true"/>
+            <attr name="EntryPoint.java/Package" boolvalue="true"/>
+            
+            <file name="EntryPoint.java" url="resources/EntryPoint.template">         
+                <attr name="instantiatingIterator" methodvalue="org.netbeans.spi.java.project.support.ui.templates.JavaTemplates.createJavaTemplateIterator"/>
+                <attr name="templateCategory" stringvalue="java-classes"/>
+                <attr name="template" boolvalue="true"/>
+                <attr name="templateWizardURL" urlvalue="nbresloc:/org/netbeans/modules/gwt4nb/resources/EntryPoint.html"/>
+                <attr name="SystemFileSystem.localizingBundle" stringvalue="org.netbeans.modules.gwt4nb.Bundle"/>
+                <attr name="SystemFileSystem.icon" urlvalue="nbresloc:org/netbeans/modules/gwt4nb/resources/entrypoint.gif"/>
+            </file>
+            
+            <file name="GWTService.java" url="services/resources/GWTService.template">         
+                <attr name="instantiatingIterator" methodvalue="org.netbeans.spi.java.project.support.ui.templates.JavaTemplates.createJavaTemplateIterator"/>
+                <attr name="templateCategory" stringvalue="java-classes"/>
+                <attr name="template" boolvalue="true"/>
+                <attr name="templateWizardURL" urlvalue="nbresloc:/org/netbeans/modules/gwt4nb/resources/EntryPoint.html"/>
+                <attr name="SystemFileSystem.localizingBundle" stringvalue="org.netbeans.modules.gwt4nb.Bundle"/>
+            </file>
+            
+            <file name="GWTServiceImpl.java" url="services/resources/GWTServiceImpl.template">         
+                <attr name="instantiatingIterator" methodvalue="org.netbeans.spi.java.project.support.ui.templates.JavaTemplates.createJavaTemplateIterator"/>
+                <attr name="templateCategory" stringvalue="java-classes"/>
+                <attr name="template" boolvalue="true"/>
+                <attr name="SystemFileSystem.localizingBundle" stringvalue="org.netbeans.modules.gwt4nb.Bundle"/>
+            </file>
+            
+            <file name="GWTServiceAsync.java" url="services/resources/GWTServiceAsync.template">         
+                <attr name="instantiatingIterator" methodvalue="org.netbeans.spi.java.project.support.ui.templates.JavaTemplates.createJavaTemplateIterator"/>
+                <attr name="templateCategory" stringvalue="java-classes"/>
+                <attr name="template" boolvalue="true"/>
+                <attr name="SystemFileSystem.localizingBundle" stringvalue="org.netbeans.modules.gwt4nb.Bundle"/>
+            </file>
+            
+            <file name="GWTServiceUsageExample.java" url="services/resources/GWTServiceUsageExample.template">         
+                <attr name="instantiatingIterator" methodvalue="org.netbeans.spi.java.project.support.ui.templates.JavaTemplates.createJavaTemplateIterator"/>
+                <attr name="templateCategory" stringvalue="java-classes"/>
+                <attr name="template" boolvalue="true"/>
+                <attr name="SystemFileSystem.localizingBundle" stringvalue="org.netbeans.modules.gwt4nb.Bundle"/>
+            </file>
+            
+        </folder>
+        <folder name="GWT">
+            <attr name="SystemFileSystem.localizingBundle" stringvalue="org.netbeans.modules.gwt4nb.services.Bundle"/>
+            <file name="GWT_Service">
+                <attr name="template" boolvalue="true"/>
+                <attr name="SystemFileSystem.icon" urlvalue="nbresloc:org/netbeans/modules/gwt4nb/services/resources/gwt_art.gif"/>
+                <attr name="instantiatingIterator" methodvalue="org.netbeans.modules.gwt4nb.services.NewServiceWizardIterator.createIterator"/>
+                <attr name="instantiatingWizardURL" urlvalue="nbresloc:/org/netbeans/modules/gwt4nb/services/resources/GWTService.html"/>
+                <attr name="templateCategory" stringvalue="web-types"/>
+                <attr name="SystemFileSystem.localizingBundle" stringvalue="org.netbeans.modules.gwt4nb.services.Bundle"/>
+            </file>
+        </folder>
+    </folder>        
+    
+    <folder name="Services">
+        <file name="org-netbeans-modules-gwt4nb-GWTSettings.settings" url="settings/GWTSettings.settings"/>
+    </folder>
+    
+</filesystem>

@@ -1,0 +1,47 @@
+/*
+ * __NAME__.java
+ *
+ * Created on __DATE__, __TIME__
+ *
+ * To change this template, choose Tools | Template Manager
+ * and open the template in the editor.
+ */
+
+package Templates.Classes;
+
+import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.Widget;
+
+/**
+ *
+ * @author __USER__
+ */
+public class __NAME__ implements EntryPoint {
+
+    /** Creates a new instance of __NAME__ */
+    public __NAME__() {
+    }
+
+    /** 
+        The entry point method, called automatically by loading a module
+        that declares an implementing class as an entry-point
+    */
+    public void onModuleLoad() {
+        final Label label = new Label("Hello, GWT!!!");
+        final Button button = new Button("Click me!");
+        
+        button.addClickListener(new ClickListener(){
+            public void onClick(Widget w) {
+                label.setVisible(!label.isVisible());
+            }
+        });
+        
+        RootPanel.get().add(button);
+        RootPanel.get().add(label);
+    }
+
+}

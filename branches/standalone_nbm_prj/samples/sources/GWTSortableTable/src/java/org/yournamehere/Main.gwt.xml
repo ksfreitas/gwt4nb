@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<inherits name="com.google.gwt.user.User"/>
+	<entry-point class="org.yournamehere.client.MainEntryPoint"/>
+	<!-- Do not define servlets here, use web.xml -->
+</module>

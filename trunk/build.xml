@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- You may freely edit this file. See harness/README in the NetBeans platform -->
+<!-- for some information on what you could do (e.g. targets to override). -->
+<!-- If you delete this file and reopen the project it will be recreated. -->
+<project name="org.netbeans.modules.gwt4nb" default="netbeans" basedir=".">
+    <description>Builds, tests, and runs the project org.netbeans.modules.gwt4nb.</description>
+    <import file="nbproject/build-impl.xml"/>
+
+    <property file="nbproject/private/private.properties"/>
+
+    <!--
+        Runs FindBugs
+    -->
+    <target name="findbugs" depends="jar">
+        <!-- set findbugs.home in nbproject/private/private.properties first -->
+        <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask"
+                classpath="${findbugs.home}/lib/findbugs-ant.jar"/>
+                
+        <echo message="${basedir}"/>
+        <findbugs home="${findbugs.home}"
+                  output="html" 
+                  outputFile="findbugs.html" effort="max" jvmargs="-Xmx512M">
+            <sourcePath path="${basedir}/src" />
+            <class location="${basedir}/build/classes" />
+        </findbugs>
+    </target>
+
+    <!--
+        Packages the Maven/GAE/GWT/JDO sample application for the new
+        project wizard.
+    -->
+    <target name="package-gaetemplate">
+        <delete file="src/org/netbeans/modules/gwt4nb/GWTGAEProjectProject.zip"/>
+        <zip compress="false"
+                destfile="src/org/netbeans/modules/gwt4nb/GWTGAEProjectProject.zip">
+            <fileset dir="samples/gaetemplate">
+                <include name="src/**"/>
+                <include name="nbactions.xml"/>
+                <include name="pom.xml"/>
+            </fileset>
+        </zip>
+    </target>
+</project>

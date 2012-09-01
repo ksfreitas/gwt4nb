@@ -1,0 +1,20 @@
+/*
+ * __NAME__.java
+ *
+ * Created on __DATE__, __TIME__
+ *
+ * To change this template, choose Tools | Template Manager
+ * and open the template in the editor.
+ */
+
+package Templates.Classes;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+
+
+/**
+ *
+ * @author __USER__
+ */
+public interface __NAME__ {
+    public void myMethod(String s, AsyncCallback callback);
+}

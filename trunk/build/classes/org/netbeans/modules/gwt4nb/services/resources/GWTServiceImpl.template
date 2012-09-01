@@ -1,0 +1,23 @@
+<#assign licenseFirst = "/*">
+<#assign licensePrefix = " * ">
+<#assign licenseLast = " */">
+<#include "../Licenses/license-${project.license}.txt">
+
+<#if package?? && package != "">
+package ${package};
+
+</#if>
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
+import ${clientpackage}.${servicename};
+
+/**
+ *
+ * @author ${user}
+ */
+public class ${name} extends RemoteServiceServlet implements ${servicename} {
+    public String myMethod(String s) {
+        // Do something interesting with 's' here on the server.
+        return "Server says: " + s;
+    }
+}

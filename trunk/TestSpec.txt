@@ -1,0 +1,222 @@
+The following tests should be run before every release of GWT4NB
+================================================================
+
+Environment: GWT 2.2, NetBeans 6.9
+
+0 Run unit tests
+ => all tests pass
+
+0.5 Run FindBugs
+ - no "High Priority Warnings" should be in findbugs.html
+
+0.7 Run functional tests
+
+1. (automated) Create GWT project with GWT
+ - File/New Project/Java Web/Web Application/GWT/Finish
+ => project is created without errors and shown in the "Projects" view
+
+2. Start project
+ - create a new project with GWT
+ - RMB over the project created in 1/Run
+ => browser is started with a "Click me!" button
+
+3. Debug project (-noserver)
+ - create a new project with GWT
+ - open ManEntryPoint.java
+ - set a breakpoint the the line
+   label.setVisible(!label.isVisible());
+ - RMB over the project created in 1/Debug
+ => GWT shell is started with a "Click me!" button
+ - click on the button
+ => debugger stops at the specified line
+
+4. Debug project
+ - create a new project with GWT 2.2
+ - open ManEntryPoint.java
+ - set a breakpoint the the line
+   label.setVisible(!label.isVisible());
+ - main menu/Debug/GWT Hosted mode
+ => GWT shell is started with a "Click me!" button
+ - click on the button
+ => debugger stops at the specified line
+
+5. GWT compiler should not be called unnecessary
+ - create a new project with GWT
+ - build the project
+ - build the project again
+ => GWT compiler is not called
+
+6. Adding GWT to an existing web project
+ - create an empty web project without GWT
+ - project properties/frameworks
+ - add GWT
+ - test running (see 2). Use /welcomeGWT.html to start the GWT app.
+ - test debugging -noserver (see 3)
+ - test debugging (see 4)
+
+7. Convert a project to a newer GWT version
+ - create a project with GWT 1.6
+ - convert it to GWT 1.7 => all libraries should be OK
+ - test running (see 2)
+ - test debugging -noserver (see 3)
+ - test debugging (see 4)
+
+8. GIN support
+ - open samples/ginsample
+ - test running (see 2)
+ - test debugging -noserver (see 3)
+ - test debugging (see 4)
+
+9. Maven
+ - create a new Maven web project with JEE 5
+ - add GWT to it
+ - test build
+ - test run (use welcomeGWT.html to see the application)
+
+10. GWT RPC method synchronization
+ - create a new project with GWT
+ - create an RPC interface
+ - add "public void myMethod2(String s, int a, List<Map<String, Integer>> c);" to GWTService.java
+ - synchronize GWTServiceAsync.java
+ => "public void myMethod2(String s, int a, List<Map<String, Integer>> c,
+            AsyncCallback<Void> asyncCallback);"
+   should be inserted
+
+11. JavaDoc should be registered
+ - delete GWT library
+ - create a project with GWT 1.6
+ - convert the project to GWT
+ => Alt+F1 and Shift+F1 on "EntryPoint" in "MainEntryPoint.java"
+    should show the documentation
+
+12. Debugging should not call the GWT compiler
+ - create a new GWT project
+ - "Debug" from the local menu in "Projects"
+ => GWT compiler is not called
+
+13. Code completion in GWT module files
+ - create a new project with GWT
+ - test the code completion in the module file
+ => popup with valid XML elements should be shown
+
+14. Classes unsupported by GWT
+ - create a new project with GWT
+ - add the line "javax.swing.JFrame f = null;" to MainEntryPoint.java
+ => a hint should be shown "Class JFrame is not supported by GWT"
+
+15. Code completion in .ui.xml
+ - create a new project with GWT
+ - create a new UI Binder
+ - Ctrl+Space after g:
+ => a completion window should show up
+
+16. Support for multiple modules
+ - open samples/twomodules
+ - test running (see 2)
+ - test debugging -noserver (see 3)
+ - test debugging (see 4)
+
+17. Wizard for GWT constants
+ - create a new GWT project
+ - create GWT constants
+ => .java and .properties are created
+
+18. Synchronization for GWT constants
+ - create a new GWT project
+ - create GWT constants
+     - add "String greetings2();" to the interface
+ - apply the hint
+ => "greetings2=" should be added to the .properties file
+
+19. Debug a Maven project
+ - create a new Maven web project with JEE 5
+ - add GWT to the project
+ - run gwt:debug goal and attach the debugger
+ - set a breakpoint in MainEntryPoint and press the button in the browser
+ => the debugger should break the application
+
+20. Unit tests
+ - create a GWTTestCase base unit test
+ - add the following code to it:
+     public void testAdd() {
+        assertEquals(5, MainEntryPoint.add(2, 3));
+    }
+ - add the following code to MainEntryPoint:
+    public static native int add(int a, int b) /*-{
+        return a + b;
+    }-*/;
+ - run the test
+ => the test passes
+
+21. Code generator "Use a GWT module"
+ - create a new project with GWT
+ - open welcomeGWT.html
+ - Alt+Ins and choose "Use a GWT module"
+ => <script type="text/javascript" src="..."></script> should be inserted
+
+22. gwt.xml file creation
+ - Create a new GWT project with GWT
+ - add a new module to it using the wizard
+ => a .gwt.xml file and 3 packages (public, client, server) should be created
+
+23. Settings
+ - create a new project with GWT
+ - open Project properties
+ - select the "GWT" category
+ - change compiler JVM args
+ - OK
+ - reopen the dialog
+ => new value should be shown for compiler JVM args
+
+24. Renaming a service
+ - create a new project with GWT
+ - create a new GWT service
+ - rename it
+ => classes are renamed
+
+25. Deleting a service
+ - create a new project with GWT
+ - create a new GWT service
+ - delete it
+ => all files are deleted
+
+21. Code generator "Insert GWT History Frame"
+ - create a new project with GWT
+ - open welcomeGWT.html
+ - Alt+Ins and choose "Insert GWT History Frame"
+ => <iframe src="javascript... should be inserted
+
+22. GAE+GWT project creation/running
+ - delete ~/.m2 directory
+ - create a new Maven GWT+GAE project
+ - start project
+ - open localhost:8080 in the browser
+ => a page with a text box is displayed
+ - add 2 texts
+ - refresh the page
+ => 2 texts are displayed
+
+22. GAE+GWT project debugging
+ - delete ~/.m2 directory
+ - create a new Maven GWT+GAE project
+ - set a breakpoint in addMessage()
+ - debug project
+ - connect to the port 8000
+ => a page with a text box is displayed
+ - press the "add message" button
+ => the debugger should stop and show the entered message
+
+22. GAE+GWT project creation/running/stopping
+ - create a new Maven GWT+GAE project
+ - Custom/Start Local Server
+ - open localhost:8080 in the browser
+ => a page with a text box is displayed
+ - Custom/Stop Local Server
+ => the server is stopped
+
+ 23. Older Netbeans versions
+ - install the .nbm in Netbeans 6.8 and 6.7.1
+ - create a new GWT project
+ => no errors
+ 
+ 
