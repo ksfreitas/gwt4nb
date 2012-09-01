@@ -280,7 +280,7 @@ target, declare a new one with the same name in build.xml.
     echo for the GWT installation directory.
     -->
     <target name="-gwt-print-dir">
-        <echo>GWT4NB https://gwt4nb.dev.java.net</echo>
+        <echo>GWT4NB https://github.com/gwt4nb/gwt4nb</echo>
         <echo message="GWT installation directory: ${auxiliary.org-netbeans-modules-gwt4nb.GWTDir}"/>
     </target>
 

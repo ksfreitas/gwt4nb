@@ -43,7 +43,7 @@ import org.openide.util.NbBundle;
 /**
  *
  * @author tomslot
- * @author see https://gwt4nb.dev.java.net/
+ * @author see https://github.com/gwt4nb/gwt4nb/
  */
 public class GWTConfigPanel implements 
         WizardDescriptor.FinishablePanel<Object>,

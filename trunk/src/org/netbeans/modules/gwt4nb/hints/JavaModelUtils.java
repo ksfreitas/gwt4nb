@@ -38,7 +38,7 @@ import org.netbeans.api.java.source.ElementHandle;
 /**
  *
  * @author Tomasz.Slota@Sun.COM
- * @author see https://gwt4nb.dev.java.net/
+ * @author see https://github.com/gwt4nb/gwt4nb/
  */
 public class JavaModelUtils {
     /**

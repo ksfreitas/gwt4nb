@@ -26,7 +26,7 @@ import org.openide.util.NbPreferences;
  * Settings.
  * 
  * @author tom
- * @author see https://gwt4nb.dev.java.net/
+ * @author see https://github.com/gwt4nb/gwt4nb/
  */
 public class GWTSettings {
     private static final String GWT_LOCATION = "gwtLocation";   // NOI18N

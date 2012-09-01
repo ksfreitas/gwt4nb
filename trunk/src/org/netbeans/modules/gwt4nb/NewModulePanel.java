@@ -33,7 +33,7 @@ import org.openide.util.NbBundle;
  * New module.
  * 
  * @author Tomasz.Slota@Sun.COM
- * @author see https://gwt4nb.dev.java.net/
+ * @author see https://github.com/gwt4nb/gwt4nb/
  */
 public class NewModulePanel implements WizardDescriptor.Panel<WizardDescriptor>,
         WizardDescriptor.FinishablePanel<WizardDescriptor> {

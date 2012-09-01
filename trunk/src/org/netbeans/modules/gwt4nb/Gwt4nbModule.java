@@ -39,7 +39,7 @@ import org.openide.util.Exceptions;
  * Module installation class for gwt4nb
  *
  * @author prem
- * @author see https://gwt4nb.dev.java.net/
+ * @author see https://github.com/gwt4nb/gwt4nb/
  */
 public class Gwt4nbModule extends ModuleInstall {
     private final static long serialVersionUID = 1;

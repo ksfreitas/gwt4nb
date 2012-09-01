@@ -61,7 +61,7 @@ import org.xml.sax.SAXException;
  * Utilities
  *
  * @author tomslot
- * @author see https://gwt4nb.dev.java.net/
+ * @author see https://github.com/gwt4nb/gwt4nb/
  */
 public class GWT4NBUtil {
     /** 

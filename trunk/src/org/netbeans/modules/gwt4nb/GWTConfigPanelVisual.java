@@ -33,7 +33,7 @@ import org.openide.awt.HtmlBrowser;
  *
  * @author Tomas.Zezula@Sun.COM
  * @author Tomasz.Slota@Sun.COM
- * @author see https://gwt4nb.dev.java.net/
+ * @author see https://github.com/gwt4nb/gwt4nb/
  */
 public class GWTConfigPanelVisual extends javax.swing.JPanel {
     private static final long serialVersionUID = 1;

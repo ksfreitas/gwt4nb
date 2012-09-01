@@ -34,7 +34,7 @@ import org.openide.filesystems.FileUtil;
  *
  * @author Tomasz.Slota@Sun.COM
  * @author lemnik@dev.java.net
- * @author see https://gwt4nb.dev.java.net/
+ * @author see https://github.com/gwt4nb/gwt4nb/
  */
 public class NewModuleWizardIterator implements
         WizardDescriptor.InstantiatingIterator<WizardDescriptor> {

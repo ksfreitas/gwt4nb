@@ -52,7 +52,7 @@ import org.w3c.dom.NodeList;
  * Information about a GWT project (Maven or Ant).
  * 
  * @author Tomasz Slota
- * @author see https://gwt4nb.dev.java.net/
+ * @author see https://github.com/gwt4nb/gwt4nb/
  */
 public class GWTProjectInfo {
     public static final String BUILD_GWT   = "build-gwt.xml"; // NOI18N

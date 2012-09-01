@@ -33,7 +33,7 @@ import org.openide.util.NbBundle;
  * Controller for the "interface extends Constants"
  * 
  * @author Tomasz.Slota@Sun.COM
- * @author see https://gwt4nb.dev.java.net/
+ * @author see https://github.com/gwt4nb/gwt4nb/
  */
 public class NewConstantsPanel implements WizardDescriptor.Panel<WizardDescriptor>,
         WizardDescriptor.FinishablePanel<WizardDescriptor> {
