@@ -22,14 +22,21 @@ import java.awt.Image;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import javax.swing.JOptionPane;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.netbeans.api.java.project.JavaProjectConstants;
+import org.netbeans.api.project.Project;
+import org.netbeans.api.project.ProjectUtils;
+import org.netbeans.api.project.SourceGroup;
+import org.netbeans.api.project.ui.OpenProjects;
 import org.netbeans.modules.xml.catalog.spi.CatalogDescriptor;
 import org.netbeans.modules.xml.catalog.spi.CatalogListener;
 import org.netbeans.modules.xml.catalog.spi.CatalogReader;
+import org.openide.util.Exceptions;
 import org.openide.util.ImageUtilities;
 import org.openide.util.NbBundle;
 import org.xml.sax.EntityResolver;
@@ -143,12 +150,74 @@ public class XSDCatalog implements CatalogReader, CatalogDescriptor,
         }
 
         if (systemId != null && systemId.contains(UI_IMPORT_PACKAGE)) {
-            File f = ProjectPackageCatalog.createXSD(systemId);
+            File f = createXSD(systemId);
             if (f != null) {
                 return new org.xml.sax.InputSource("file:" + f.getPath());
             }
         }
 
+        return null;
+    }
+    
+    /**
+     * Create a XSD schema from package. The file will be auto-removed on exit.
+     */
+    private File createXSD(String packagePath) {
+        packagePath = packagePath.split(":")[2].split("\\?")[0];
+        
+        String originalPackagePath = packagePath;
+        packagePath = packagePath.replaceAll("\\.", "\\/");
+        for (Project p : OpenProjects.getDefault().getOpenProjects()) {
+            for (SourceGroup sg : ProjectUtils.getSources(p).getSourceGroups(JavaProjectConstants.SOURCES_TYPE_JAVA)) {
+                String path = sg.getRootFolder().getPath() + "/"
+                        + packagePath;
+                File folder = new File(path);
+                if (folder.exists() && folder.isDirectory()) {
+                    try {
+                        File xsd = File.createTempFile("package", "xsd");
+                        Logger.getLogger(XSDCatalog.class.getName()).log(Level.INFO, 
+                                "Schema based code-completion created: {0}", xsd.getPath());
+                        xsd.deleteOnExit();
+                        PrintWriter pw = new PrintWriter(xsd);
+
+                        pw.println("<?xml version=\"1.0\"?>");
+                        pw.println("<xs:schema");
+                        pw.println("    xmlns:xs=\"http://www.w3.org/2001/XMLSchema\"");
+                        pw.println("    targetNamespace=\"urn:import:" + originalPackagePath + "\"");
+                        pw.println("    xmlns=\"urn:import:" + originalPackagePath + "\"");
+                        pw.println("    elementFormDefault=\"qualified\">");
+                        pw.println("    <xs:complexType\n"
+                                + "        name=\"ElementContentType\">\n"
+                                + "\n"
+                                + "        <xs:choice\n"
+                                + "            minOccurs=\"0\"\n"
+                                + "            maxOccurs=\"unbounded\">\n"
+                                + "            <xs:any\n"
+                                + "                processContents=\"lax\" />\n"
+                                + "        </xs:choice>\n"
+                                + "\n"
+                                + "        <xs:anyAttribute\n"
+                                + "            processContents=\"lax\" />\n"
+                                + "    </xs:complexType>\n"
+                                + "");
+
+                        for (File f : folder.listFiles()) {
+                            if (f.isFile() && f.getName().toLowerCase().endsWith(".java")) {
+                                pw.println("    <xs:element");
+                                pw.println("        name=\"" + f.getName().split("\\.")[0] + "\"");
+                                pw.println("        type=\"ElementContentType\" />");
+                            }
+                        }
+                        pw.println("</xs:schema>");
+                        pw.close();
+
+                        return xsd;
+                    } catch (IOException ex) {
+                        Exceptions.printStackTrace(ex);
+                    }
+                }
+            }
+        }
         return null;
     }
 }
