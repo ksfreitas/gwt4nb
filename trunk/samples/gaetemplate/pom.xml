@@ -179,6 +179,13 @@
             <version>${gwt.version}</version>
             <scope>provided</scope>
         </dependency>
+        
+        <!-- Solve bug when running in hosted mode https://github.com/gwt4nb/gwt4nb/issues/7 -->
+        <dependency>
+            <groupId>jetty</groupId>
+            <artifactId>javax.servlet</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

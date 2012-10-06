@@ -21,13 +21,23 @@ package org.netbeans.modules.gwt4nb;
 import java.awt.Image;
 import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+import java.util.jar.JarEntry;
+import java.util.jar.JarInputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import org.netbeans.api.java.classpath.ClassPath;
 import org.netbeans.api.java.project.JavaProjectConstants;
 import org.netbeans.api.project.Project;
 import org.netbeans.api.project.ProjectUtils;
@@ -159,8 +169,49 @@ public class XSDCatalog implements CatalogReader, CatalogDescriptor,
         return null;
     }
     
+    private static File createXSD(String originalPackagePath, List<String> elements) throws FileNotFoundException, IOException {
+        File xsd = File.createTempFile("package", "xsd");
+        Logger.getLogger(XSDCatalog.class.getName()).log(Level.INFO,
+                "Schema based code-completion created: {0}", xsd.getPath());
+
+        xsd.deleteOnExit();
+        PrintWriter pw = new PrintWriter(xsd);
+        try {
+            pw.println("<?xml version=\"1.0\"?>");
+            pw.println("<xs:schema");
+            pw.println("    xmlns:xs=\"http://www.w3.org/2001/XMLSchema\"");
+            pw.println("    targetNamespace=\"urn:import:" + originalPackagePath + "\"");
+            pw.println("    xmlns=\"urn:import:" + originalPackagePath + "\"");
+            pw.println("    elementFormDefault=\"qualified\">");
+            pw.println("    <xs:complexType\n"
+                    + "        name=\"ElementContentType\">\n"
+                    + "\n"
+                    + "        <xs:choice\n"
+                    + "            minOccurs=\"0\"\n"
+                    + "            maxOccurs=\"unbounded\">\n"
+                    + "            <xs:any\n"
+                    + "                processContents=\"lax\" />\n"
+                    + "        </xs:choice>\n"
+                    + "\n"
+                    + "        <xs:anyAttribute\n"
+                    + "            processContents=\"lax\" />\n"
+                    + "    </xs:complexType>\n"
+                    + "");
+            for (String element : elements) {
+                pw.println("    <xs:element");
+                pw.println("        name=\"" + element + "\"");
+                pw.println("        type=\"ElementContentType\" />");
+            }
+            pw.println("</xs:schema>");
+        } finally {
+            pw.close();
+        }
+
+        return xsd;
+    }
+    
     /**
-     * Create a XSD schema from package. The file will be auto-removed on exit.
+     * Create a XSD schema from package
      */
     private File createXSD(String packagePath) {
         packagePath = packagePath.split(":")[2].split("\\?")[0];
@@ -174,50 +225,78 @@ public class XSDCatalog implements CatalogReader, CatalogDescriptor,
                 File folder = new File(path);
                 if (folder.exists() && folder.isDirectory()) {
                     try {
-                        File xsd = File.createTempFile("package", "xsd");
-                        Logger.getLogger(XSDCatalog.class.getName()).log(Level.INFO, 
-                                "Schema based code-completion created: {0}", xsd.getPath());
-                        xsd.deleteOnExit();
-                        PrintWriter pw = new PrintWriter(xsd);
-
-                        pw.println("<?xml version=\"1.0\"?>");
-                        pw.println("<xs:schema");
-                        pw.println("    xmlns:xs=\"http://www.w3.org/2001/XMLSchema\"");
-                        pw.println("    targetNamespace=\"urn:import:" + originalPackagePath + "\"");
-                        pw.println("    xmlns=\"urn:import:" + originalPackagePath + "\"");
-                        pw.println("    elementFormDefault=\"qualified\">");
-                        pw.println("    <xs:complexType\n"
-                                + "        name=\"ElementContentType\">\n"
-                                + "\n"
-                                + "        <xs:choice\n"
-                                + "            minOccurs=\"0\"\n"
-                                + "            maxOccurs=\"unbounded\">\n"
-                                + "            <xs:any\n"
-                                + "                processContents=\"lax\" />\n"
-                                + "        </xs:choice>\n"
-                                + "\n"
-                                + "        <xs:anyAttribute\n"
-                                + "            processContents=\"lax\" />\n"
-                                + "    </xs:complexType>\n"
-                                + "");
-
+                        ArrayList<String> elements = new  ArrayList<String>();
                         for (File f : folder.listFiles()) {
                             if (f.isFile() && f.getName().toLowerCase().endsWith(".java")) {
-                                pw.println("    <xs:element");
-                                pw.println("        name=\"" + f.getName().split("\\.")[0] + "\"");
-                                pw.println("        type=\"ElementContentType\" />");
+                                elements.add(f.getName().split("\\.")[0]);
                             }
                         }
-                        pw.println("</xs:schema>");
-                        pw.close();
-
-                        return xsd;
+                        return createXSD(originalPackagePath, elements);
                     } catch (IOException ex) {
                         Exceptions.printStackTrace(ex);
                     }
                 }
             }
         }
+
+        ClassPath cp = ClassPath.getClassPath(OpenProjects.getDefault().getMainProject().getProjectDirectory(), ClassPath.COMPILE);
+        for (ClassPath.Entry entr : cp.entries()) {
+            try {
+                if (entr.getURL().getFile().length() < 9) {
+                    continue;
+                }
+                String fname = URLDecoder.decode(entr.getURL().getFile().substring(6, entr.getURL().getFile().length() - 2));
+                File f = new File(fname);
+                if (!f.exists()) {
+                    continue;
+                }
+                FileInputStream fis = new FileInputStream(fname);
+                Set<String> classFound;
+                try {
+                    classFound = getClasses(packagePath, fis);
+                } finally {
+                    fis.close();
+                }
+                ArrayList<String> elements = new ArrayList<String>();
+                if (classFound != null && !classFound.isEmpty()) {
+                    for (String clazz : classFound) {
+                        String[] splited = clazz.split("\\.");
+                        elements.add(splited[splited.length - 1]);
+                    }
+                    return createXSD(originalPackagePath, elements);
+                }
+            } catch (Exception ex) {
+                Exceptions.printStackTrace(ex);
+            }
+        }
         return null;
+    }
+    
+    public static Set<String> getClasses(String packageName, InputStream is)
+            throws ClassNotFoundException, FileNotFoundException, IOException {
+        HashSet<String> set = new HashSet<String>();
+
+        JarInputStream jarFile = new JarInputStream(
+                is);
+        JarEntry jarEntry;
+
+        int level = packageName.split("/").length;
+        while (true) {
+            jarEntry = jarFile.getNextJarEntry();
+            if (jarEntry == null) {
+                break;
+            }
+                
+            String entryName = jarEntry.getName();
+            if ((entryName.startsWith(packageName))
+                    && (jarEntry.getName().endsWith(".class"))) {
+                if (entryName.split("/")[level].endsWith(".class")) {
+                    set.add((entryName.
+                            replaceAll("/", "\\.").
+                            substring(0, entryName.length() - 6)));
+                }
+            }
+        }
+        return set;
     }
 }
