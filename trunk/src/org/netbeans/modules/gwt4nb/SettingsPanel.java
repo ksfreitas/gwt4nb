@@ -447,7 +447,7 @@ public class SettingsPanel extends javax.swing.JPanel {
                         .add(jComboBoxGWTVersion, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .add(18, 18, 18)
                         .add(jCheckBoxSuperDev)
-                        .add(0, 0, Short.MAX_VALUE))
+                        .add(0, 216, Short.MAX_VALUE))
                     .add(jTextFieldTestsArgs))
                 .addContainerGap())
             .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)

@@ -289,7 +289,8 @@ public class XSDCatalog implements CatalogReader, CatalogDescriptor,
                 
             String entryName = jarEntry.getName();
             if ((entryName.startsWith(packageName))
-                    && (jarEntry.getName().endsWith(".class"))) {
+                    && (entryName.endsWith(".class")) &&
+                    !entryName.contains("$")) {
                 if (entryName.split("/")[level].endsWith(".class")) {
                     set.add((entryName.
                             replaceAll("/", "\\.").
