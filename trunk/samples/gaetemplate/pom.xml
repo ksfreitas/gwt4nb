@@ -184,6 +184,7 @@
         <dependency>
             <groupId>jetty</groupId>
             <artifactId>javax.servlet</artifactId>
+            <version>5.1.12</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
