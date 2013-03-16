@@ -281,6 +281,7 @@ public class Gwt4nbModule extends ModuleInstall {
             for (int i = 0; i < sg.length; i++) {
                 String name = sg[i].getName();
                 if ("${src.dir}".equals(name)) continue; //ignore the primary source
+                if (name.startsWith("${test")) continue; //ignore test sources
                 //escape secondary src var (always starts with $)
                 String append = "\\" + name;
                 //find any occurance of ${src.dir} followed by ':' path separator
