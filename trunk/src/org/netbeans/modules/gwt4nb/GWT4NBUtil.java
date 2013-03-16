@@ -26,6 +26,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -133,7 +134,7 @@ public class GWT4NBUtil {
             }
         }
     }
-    
+
     /**
      * Copies a resource to a file and replaces variables.
      *
@@ -144,6 +145,20 @@ public class GWT4NBUtil {
      */
     public static void copyResource(final String res, final FileObject to,
             final String[] mapFrom, final String[] mapTo) throws IOException {
+        copyResource(res, to, mapFrom, mapTo, false);
+    }
+    
+    /**
+     * Copies a resource to a file and replaces variables.
+     *
+     * @param res {@link Class#getResourceAsStream(java.lang.String)}
+     * @param to target file
+     * @param mapFrom regular expressions to search
+     * @param mapTo replacement strings
+     * @param multiLine whether to search/replace within multiple lines
+     */
+    public static void copyResource(final String res, final FileObject to,
+            final String[] mapFrom, final String[] mapTo, boolean multiLine) throws IOException {
         assert res != null;
         assert to != null;
         assert mapFrom != null;
@@ -156,12 +171,35 @@ public class GWT4NBUtil {
         try {
             FileLock lock = to.lock();
             try {
-                PrintWriter out = new PrintWriter(
-                        new OutputStreamWriter(to.getOutputStream(lock)));
-                try {
-                    copyStream(in,out,mapFrom,mapTo);
-                } finally {
-                    out.close();
+                if (multiLine) {
+                    //first copy input to String without regex mapping
+                    StringWriter sw = new StringWriter();
+                    PrintWriter out = new PrintWriter(sw);
+                    try {
+                        copyStream(in,out,new String[0],new String[0]);
+                    } finally {
+                        out.close();
+                    }
+                    //regex/replace an entire content string
+                    String content = sw.toString();
+                    for (int i=0; i<mapFrom.length; i++) {
+                        content = content.replaceAll(mapFrom[i],mapTo[i]);
+                    }
+                    //write to the target
+                    OutputStreamWriter writer = new OutputStreamWriter(to.getOutputStream(lock));
+                    try {
+                        writer.write(content);
+                    } finally {
+                        writer.close();
+                    }
+                } else {
+                    PrintWriter out = new PrintWriter(
+                            new OutputStreamWriter(to.getOutputStream(lock)));
+                    try {
+                        copyStream(in,out,mapFrom,mapTo);
+                    } finally {
+                        out.close();
+                    }
                 }
             } finally {
                 lock.releaseLock();
@@ -182,7 +220,7 @@ public class GWT4NBUtil {
             out.println(line);
         }
     }
-    
+
     public static boolean isValidJavaIdentifier(String txt){
         if (txt.length() == 0 || !Character.isJavaIdentifierStart(txt.charAt(0))) {
             return false;

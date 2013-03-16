@@ -17,16 +17,14 @@ package org.netbeans.modules.gwt4nb;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
-import java.util.logging.Level;
+import org.netbeans.api.java.project.JavaProjectConstants;
 import org.netbeans.api.project.Project;
 import org.netbeans.api.project.ProjectInformation;
 import org.netbeans.api.project.ProjectUtils;
+import org.netbeans.api.project.SourceGroup;
 import org.netbeans.api.project.ui.OpenProjects;
 import org.netbeans.spi.project.support.ant.EditableProperties;
 import org.openide.filesystems.FileObject;
@@ -273,13 +271,45 @@ public class Gwt4nbModule extends ModuleInstall {
 
         // Maven projects do not have nbproject dir
         if (nbprj != null) {
+            //support for multiple Java sources for both compile and debug
+            //strategy: find all relevant occurances of ${src.dir} and append additional source
+            SourceGroup[] sg = ProjectUtils.getSources(p).getSourceGroups(JavaProjectConstants.SOURCES_TYPE_JAVA);
+            List<String> patterns = new ArrayList<String>();
+            List<String> replace = new ArrayList<String>();
+            //escaped ${src.dir} pattern
+            String srcDir = "\\$\\{src\\.dir\\}";
+            for (int i = 0; i < sg.length; i++) {
+                String name = sg[i].getName();
+                if ("${src.dir}".equals(name)) continue; //ignore the primary source
+                //escape secondary src var (always starts with $)
+                String append = "\\" + name;
+                //find any occurance of ${src.dir} followed by ':' path separator
+                patterns.add("(" + srcDir + ")\\:"); 
+                //append secondary source path right after the primary one
+                replace.add("$1:" + append + ":"); 
+                //find any ${src.dir}" preceeded by ':' path separator
+                patterns.add("\\:(" + srcDir + ")\""); 
+                //append secondary source path right after the primary one
+                replace.add(":$1:" + append + "\""); 
+                //find any <pathelement path="${src.dir}"/> element 
+                patterns.add("(?s)(\\s*<pathelement path=\")(" + srcDir + ")(\"\\/>)");
+                //append the <pathelement> for the additional source on the next line
+                replace.add("$1$2$3$1" + append + "$3");
+                //find any <srcfiles path="${src.dir}">...</srcfiles>
+                patterns.add("(?s)(\\s*<srcfiles dir=\")(" + srcDir + ")(\">.*<\\/srcfiles>)"); 
+                //append the <srcfile> for the additional source on the next line(s)
+                replace.add("$1$2$3$1" + append + "$3");
+            }
+            patterns.add("__PROJECT_NAME__");
+            replace.add(projectName);
+            
             // COPY build-gwt.xml
             FileObject buildGwt = nbprj.getFileObject(
                     GWTProjectInfo.BUILD_GWT);
             GWT4NBUtil.copyResource(GWTProjectInfo.RESOURCE_BASE +
                     GWTProjectInfo.BUILD_GWT, buildGwt,
-                    new String[]{"__PROJECT_NAME__"}, // NOI18N
-                    new String[]{projectName});
+                    patterns.toArray(new String[patterns.size()]), // NOI18N
+                    replace.toArray(new String[patterns.size()]), true); //multiline mode
 
         }
 
