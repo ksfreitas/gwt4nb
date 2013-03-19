@@ -887,7 +887,7 @@ target, declare a new one with the same name in build.xml.
                 <arg value="-src"/>
                 <arg value="${build.web.dir}"/>
                 
-                <arg value="${gwt.module}"/>
+                <arg line="${gwt.module}"/>
             </java>
         </parallel>
     </target>
@@ -1271,7 +1271,7 @@ target, declare a new one with the same name in build.xml.
                 <arg value="-src"/>
                 <arg value="${build.web.dir}"/>
                 
-                <arg value="${gwt.module}"/>
+                <arg line="${gwt.module}"/>
             </java>
         </parallel>
     </target>
