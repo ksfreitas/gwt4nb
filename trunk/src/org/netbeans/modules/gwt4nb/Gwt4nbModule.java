@@ -297,7 +297,7 @@ public class Gwt4nbModule extends ModuleInstall {
                 //append the <pathelement> for the additional source on the next line
                 replace.add("$1$2$3$1" + append + "$3");
                 //find any <srcfiles path="${src.dir}">...</srcfiles>
-                patterns.add("(?s)(\\s*<srcfiles dir=\")(" + srcDir + ")(\">.*<\\/srcfiles>)"); 
+                patterns.add("(?s)(\\s*<srcfiles dir=\")(" + srcDir + ")(\">.*?<\\/srcfiles>)"); 
                 //append the <srcfile> for the additional source on the next line(s)
                 replace.add("$1$2$3$1" + append + "$3");
             }
