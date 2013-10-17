@@ -8,5 +8,8 @@
             <file>file:/C:/Users/cassio/Documents/GitHub/gwt4nb/trunk/nbproject/private/platform-private.properties</file>
             <file>file:/C:/Users/cassio/Documents/GitHub/gwt4nb/trunk/src/org/netbeans/modules/gwt4nb/GWTWebModuleExtender.java</file>
         </group>
+        <group name="GWT4NB">
+            <file>file:/C:/Users/cassio/Documents/GitHub/gwt4nb/trunk/src/org/netbeans/modules/gwt4nb/SettingsPanel.java</file>
+        </group>
     </open-files>
 </project-private>
