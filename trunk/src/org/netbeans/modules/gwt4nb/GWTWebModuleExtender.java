@@ -50,7 +50,6 @@ import org.netbeans.modules.j2ee.dd.api.web.WebApp;
 import org.netbeans.modules.j2ee.dd.api.web.WelcomeFileList;
 import org.netbeans.modules.web.api.webmodule.ExtenderController;
 import org.netbeans.modules.web.api.webmodule.WebModule;
-import org.netbeans.modules.web.project.api.WebProjectLibrariesModifier;
 import org.netbeans.modules.web.spi.webmodule.WebModuleExtender;
 import org.netbeans.spi.project.support.ant.AntProjectHelper;
 import org.netbeans.spi.project.support.ant.EditableProperties;
@@ -808,9 +807,6 @@ public class GWTWebModuleExtender extends WebModuleExtender {
             Project project = FileOwnerQuery.getOwner(
                     webModule.getDocumentBase());
             assert project != null;
-            WebProjectLibrariesModifier wplm =
-                    project.getLookup().lookup(
-                    WebProjectLibrariesModifier.class);
 
             // find out the old version
             File oldGWTDir = GWT4NBUtil.getProjectGWTDir(project);
