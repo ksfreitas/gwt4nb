@@ -31,7 +31,7 @@ import org.netbeans.api.lexer.PartType;
 import org.netbeans.api.lexer.Token;
 import org.netbeans.api.lexer.TokenUtilities;
 import org.netbeans.lib.java.lexer.JavaCharacterTokenId;
-import org.netbeans.lib.java.lexer.JavaLexer;
+//import org.netbeans.lib.java.lexer.JavaLexer;
 import org.netbeans.spi.lexer.LanguageEmbedding;
 import org.netbeans.spi.lexer.LanguageHierarchy;
 import org.netbeans.spi.lexer.Lexer;
@@ -52,7 +52,8 @@ public class JsniLanguage {
 
             @Override
             protected Lexer<JavaTokenId> createLexer(LexerRestartInfo<JavaTokenId> info) {
-                return new JavaLexer(info);
+//                return new JavaLexer(info);
+                return null; //Dependency problem to sign NBM file. See https://netbeans.org/bugzilla/show_bug.cgi?id=226906
             }
 
             @Override
