@@ -182,6 +182,10 @@ public class GWTProjectInfo {
      */
     public static String getModulePackage(String module){
         int end = module.lastIndexOf("."); // NOI18N
+        if (end <= 0) {
+            //fallback to full modulename (which may contain no dot)
+            return module;
+        }
         return module.substring(0, end);
     }
 
