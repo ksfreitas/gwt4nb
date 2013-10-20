@@ -62,12 +62,12 @@
             </folder>
             <folder name="x-java">
                 <!-- the code below registers a syntax parser for .java files
-                with JSNI embedded.
-                <file name="language.instance">
+                with JSNI embedded.-->
+<!--                <file name="language.instance">
                     <attr name="instanceCreate" methodvalue="org.netbeans.modules.gwt4nb.JsniLanguage.language"/>
                     <attr name="instanceOf" stringvalue="org.netbeans.api.lexer.Language"/>
-                </file>
-                -->
+                </file>-->               
+                
                 <folder name="Popup">
                     <attr name="org-netbeans-modules-refactoring-api-ui-RSMEditorAction.instance/org-netbeans-modules-gwt4nb-services-refactoring-ui-ServiceRefactorAction.shadow" boolvalue="true"/>
 
