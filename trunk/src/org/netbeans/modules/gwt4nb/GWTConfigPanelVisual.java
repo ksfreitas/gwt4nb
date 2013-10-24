@@ -80,9 +80,9 @@ public class GWTConfigPanelVisual extends javax.swing.JPanel {
 
         lblGWTFolder.setLabelFor(gwtFolder);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/netbeans/modules/gwt4nb/Bundle"); // NOI18N
-        lblGWTFolder.setText(bundle.getString("GWTConfigPanelVisual.lblGWTFolder.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(lblGWTFolder, bundle.getString("GWTConfigPanelVisual.lblGWTFolder.text")); // NOI18N
 
-        btnGWTBrowse.setText(bundle.getString("GWTConfigPanelVisual.btnGWTBrowse.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(btnGWTBrowse, bundle.getString("GWTConfigPanelVisual.btnGWTBrowse.text")); // NOI18N
         btnGWTBrowse.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGWTBrowsebrowse(evt);
@@ -90,18 +90,18 @@ public class GWTConfigPanelVisual extends javax.swing.JPanel {
         });
 
         lblGWTModule.setLabelFor(gwtModule);
-        lblGWTModule.setText(bundle.getString("GWTConfigPanelVisual.lblGWTModule.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(lblGWTModule, bundle.getString("GWTConfigPanelVisual.lblGWTModule.text")); // NOI18N
 
         gwtModule.setText(org.openide.util.NbBundle.getMessage(GWTConfigPanelVisual.class, "GWTConfigPanelVisual.gwtModule.text")); // NOI18N
 
-        jLabel1.setText(org.openide.util.NbBundle.getMessage(GWTConfigPanelVisual.class, "GWTConfigPanelVisual.jLabel1.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(GWTConfigPanelVisual.class, "GWTConfigPanelVisual.jLabel1.text")); // NOI18N
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel1MouseClicked(evt);
             }
         });
 
-        jLabel2.setText(org.openide.util.NbBundle.getMessage(GWTConfigPanelVisual.class, "GWTConfigPanelVisual.jLabel2.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(GWTConfigPanelVisual.class, "GWTConfigPanelVisual.jLabel2.text")); // NOI18N
         jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel2MouseClicked(evt);
@@ -112,13 +112,10 @@ public class GWTConfigPanelVisual extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(521, Short.MAX_VALUE)
-                .add(jLabel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
             .add(layout.createSequentialGroup()
                 .add(lblGWTFolder)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(gwtFolder, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)
+                .add(gwtFolder, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 518, Short.MAX_VALUE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(btnGWTBrowse))
             .add(layout.createSequentialGroup()
@@ -126,9 +123,11 @@ public class GWTConfigPanelVisual extends javax.swing.JPanel {
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(gwtModule, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 234, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(398, Short.MAX_VALUE))
-            .add(layout.createSequentialGroup()
-                .addContainerGap(411, Short.MAX_VALUE)
-                .add(jLabel2))
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel2)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
