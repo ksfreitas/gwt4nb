@@ -48,13 +48,12 @@ public class SettingsPanelProvider implements ProjectCustomizer.CompositeCategor
         Project prj = lookup.lookup(Project.class);
         ProjectCustomizer.Category r;
         if (GWTProjectInfo.isAntGWTProject(prj)) {
-            r = ProjectCustomizer.
-                    Category.create(NbBundle.getMessage(
+            r = ProjectCustomizer.Category.create(NbBundle.getMessage(
                     SettingsPanelProvider.class, "GWT"), // NOI18N
                     NbBundle.getMessage(
-                    SettingsPanelProvider.class, "GWT"),  // NOI18N
+                            SettingsPanelProvider.class, "GWT"), // NOI18N
                     null, (Category[]) null);
-        } else{
+        } else {
             r = null;
         }
         return r;
@@ -69,15 +68,18 @@ public class SettingsPanelProvider implements ProjectCustomizer.CompositeCategor
             if (pi != null && !pi.isMaven()) {
                 final EditableProperties ep = pi.getProperties();
                 Properties p = new Properties();
-                for (Map.Entry<String, String> e: ep.entrySet()) {
+                for (Map.Entry<String, String> e : ep.entrySet()) {
                     p.setProperty(e.getKey(), e.getValue());
                 }
                 sp.fillPanel(p);
-                c.setOkButtonListener(new ActionListener() {
+
+                c.setStoreListener(new ActionListener() {
+
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         Properties props = new Properties();
                         sp.fillData(props);
-                        for (Map.Entry<Object, Object> me: props.entrySet()) {
+                        for (Map.Entry<Object, Object> me : props.entrySet()) {
                             ep.setProperty((String) me.getKey(),
                                     (String) me.getValue());
                         }
