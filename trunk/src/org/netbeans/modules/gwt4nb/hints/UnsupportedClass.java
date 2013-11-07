@@ -128,6 +128,7 @@ public class UnsupportedClass {
         boolean b = pi != null;
         if (b) {
             ExpressionTree pn = info.getCompilationUnit().getPackageName();
+            boolean foundMatchingModule=false;
             if (pn == null)
                 b = false;
             else {
@@ -136,10 +137,10 @@ public class UnsupportedClass {
                 for (String module: modules) {
                     String clientPackage =
                             GWTProjectInfo.getClientPackage(module);
-                    b = clientPackage.equals(pn_) ||
-                            pn_.startsWith(clientPackage + "."); // NOI18N
+                    foundMatchingModule |= clientPackage.equals(pn_) || pn_.startsWith(clientPackage + "."); // NOI18N
                 }
             }
+            b = foundMatchingModule;
         }
         hasGWT_.put(info, b);
         return b;
