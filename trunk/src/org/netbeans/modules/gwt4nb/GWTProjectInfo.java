@@ -43,9 +43,11 @@ import org.netbeans.spi.project.AuxiliaryConfiguration;
 
 import org.netbeans.spi.project.support.ant.EditableProperties;
 import org.openide.filesystems.FileObject;
+import org.openide.util.Exceptions;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
@@ -359,8 +361,39 @@ public class GWTProjectInfo {
      */
     public List<String> getModules() {
         List<String> r = new ArrayList<String>();
-        if (maven)
-            r.add("org.yournamehere.Main"); // NOI18N
+        if (maven){
+            final FileObject projectDirectory = project.getProjectDirectory();
+            FileObject pom = projectDirectory.getFileObject("pom.xml"); // NOI18N
+            if (pom != null)
+            {
+                try
+                {
+                    Document pomDoc = GWT4NBUtil.parseXMLFile(pom);
+                    XPathFactory factory = XPathFactory.newInstance();
+                    XPath xp = factory.newXPath();
+                    NodeList nl = (NodeList) xp.evaluate(
+                            "//project/build/plugins/plugin[artifactId='gwt-maven-plugin']/configuration/modules/module", // NOI18N
+                            pomDoc,
+                            XPathConstants.NODESET);
+                    if (nl.getLength() > 0)
+                    {
+                        for (int i = 0; i < nl.getLength(); i++)
+                        {
+                            Node item = nl.item(i);
+                            r.add(item.getTextContent());
+                        }
+                    }
+                    else
+                    {
+                        r.add("org.yournamehere.Main"); // NOI18N
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Exceptions.printStackTrace(ex);
+                }
+            }
+        }
         else {
             String gm = readGWTPropertyAnt(project,
                     "gwt.module"); // NOI18N
