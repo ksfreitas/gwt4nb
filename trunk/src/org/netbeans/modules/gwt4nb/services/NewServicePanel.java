@@ -32,11 +32,14 @@ import org.openide.WizardDescriptor;
 import org.openide.filesystems.FileObject;
 import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
+import static org.netbeans.modules.gwt4nb.services.Bundle.*;
+import org.openide.util.NbBundle.Messages;
 
 /**
  * Controller for the "GWT RPC Service"
  * 
  * @author Tomasz.Slota@Sun.COM
+ * @author benno.markiewicz@googlemail.com (contributor)
  */
 public class NewServicePanel implements 
         WizardDescriptor.Panel<WizardDescriptor>,
@@ -59,12 +62,17 @@ public class NewServicePanel implements
         FileObject dirSrc = GWTProjectInfo.getSourcesDir(project);
         final GWTProjectInfo pi = GWTProjectInfo.get(project);
         List<String> modules = pi.getModules();
-        final String module = modules.get(0);
-        String clientPackage = GWTProjectInfo.getClientPackage(module);
-        foClientPckg = dirSrc.getFileObject(
-                clientPackage.replace('.', '/'));
+        if (!modules.isEmpty()) {
+            final String module = modules.get(0);
+            String clientPackage = GWTProjectInfo.getClientPackage(module);
+            foClientPckg = dirSrc.getFileObject(
+                    clientPackage.replace('.', '/'));
+        } else {
+            foClientPckg = null;
+        }
     }
     
+    @Override
     public Component getComponent() {
         if (component == null){
             component = new NewServicePanelVisual(this);
@@ -77,16 +85,19 @@ public class NewServicePanel implements
         return project;
     }
     
+    @Override
     public HelpCtx getHelp() {
         return new HelpCtx(NewServicePanel.class);
     }
     
+    @Override
     public void readSettings(WizardDescriptor settings) {
         wizardDescriptor = settings;
         wizardDescriptor.putProperty("NewProjectWizard_Title",  // NOI18N
                 NbBundle.getMessage(NewServicePanel.class, "NewSvc")); // NOI18N
     }
     
+    @Override
     public void storeSettings(WizardDescriptor settings) {
         wizardDescriptor = settings;
         wizardDescriptor.putProperty(NewServiceWizardIterator.SERVICE_NAME_PROPERTY,
@@ -115,62 +126,67 @@ public class NewServicePanel implements
         return false;
     }
     
+    @Messages(
+            {
+                "error.nomodule=No module found",
+                "error.InvIdServiceName=Invalid identifier for service name",
+                "error.InvIdServiceSubPackage=Invalid identifier for subpackage",
+                "error.CannotCreateSvc=Cannot create GWT Service in a non-GWT Project",
+                "error.FileExists=File already exists, choose a different name"
+            }
+    )
+    @Override
     public boolean isValid() {
         String ERR_MSG = "WizardPanel_errorMessage"; // NOI18N
-        
-        if (!GWTProjectInfo.isGWTProject(project)){
-            wizardDescriptor.putProperty(ERR_MSG,
-                    NbBundle.getMessage(NewServicePanel.class, 
-                    "CannotCreateSvc")); // NOI18N
-            
+
+        if (!GWTProjectInfo.isGWTProject(project)) {
+            wizardDescriptor.putProperty(ERR_MSG, error_CannotCreateSvc());
             return false;
         }
-        
-        if (component != null){
-            if (!GWT4NBUtil.isValidJavaIdentifier(component.getServiceName())){
-                wizardDescriptor.putProperty(ERR_MSG,
-                        NbBundle.getMessage(NewServicePanel.class, 
-                        "InvId")); // NOI18N
-                
+
+        if (component != null) {
+            if (null == component.getModuleName()) {
+                wizardDescriptor.putProperty(ERR_MSG, error_nomodule());
                 return false;
             }
-            
+            if (!GWT4NBUtil.isValidJavaIdentifier(component.getServiceName())) {
+                wizardDescriptor.putProperty(ERR_MSG, error_InvIdServiceName());
+                return false;
+            }
+
             StringTokenizer strTok = new StringTokenizer(
                     component.getServiceSubpackage(), "."); // NOI18N
-            while(strTok.hasMoreElements()){
+            while (strTok.hasMoreElements()) {
                 String tmp = strTok.nextToken();
-                if(!tmp.equals("") && !GWT4NBUtil.isValidJavaIdentifier(tmp)){ // NOI18N
-                    wizardDescriptor.putProperty(ERR_MSG,
-                            NbBundle.getMessage(NewServicePanel.class, 
-                            "InvId")); // NOI18N
-                    
+                if (!tmp.isEmpty() && !GWT4NBUtil.isValidJavaIdentifier(tmp)) {
+                    wizardDescriptor.putProperty(ERR_MSG, error_InvIdServiceSubPackage());
                     return false;
                 }
             }
-            
-            if (foClientPckg != null &&
-                    isFileFoundInChildren(foClientPckg,
-                    component.getServiceName())){
-                wizardDescriptor.putProperty(ERR_MSG,
-                        NbBundle.getMessage(NewServicePanel.class, 
-                        "FileExists"));  // NOI18N
+
+            if (foClientPckg != null
+                    && isFileFoundInChildren(foClientPckg,
+                            component.getServiceName())) {
+                wizardDescriptor.putProperty(ERR_MSG, error_FileExists());
                 return false;
             }
         }
-        
+
         wizardDescriptor.putProperty(ERR_MSG, null);
-        
+
         return true;
     }
     
     private final Set<ChangeListener> listeners = new CopyOnWriteArraySet<ChangeListener>();
     
+    @Override
     public final void addChangeListener(final ChangeListener l) {
         if(l != null) {
             listeners.add(l);
         }
     }
     
+    @Override
     public final void removeChangeListener(final ChangeListener l) {
         if(l != null) {
             listeners.remove(l);
@@ -185,6 +201,7 @@ public class NewServicePanel implements
         }
     }
     
+    @Override
     public boolean isFinishPanel() {
         return true;
     }

@@ -31,11 +31,12 @@ import org.openide.util.NbBundle;
  *
  * @author Tomasz.Slota@Sun.COM
  * @author see https://github.com/gwt4nb/gwt4nb/
- */
+ * @author benno.markiewicz@googlemail.com (contributor)
+*/
 public class NewServicePanelVisual extends javax.swing.JPanel {
     private static final long serialVersionUID = 1;
 
-    private NewServicePanel controller;
+    private final NewServicePanel controller;
     
     /** 
      * Creates new form NewServicePanelVisual
@@ -52,6 +53,7 @@ public class NewServicePanelVisual extends javax.swing.JPanel {
         jComboBoxModule.setModel(new DefaultComboBoxModel(modules.toArray()));
         
         SwingUtilities.invokeLater(new Runnable(){ // Avoid endless loop
+            @Override
             public void run() {
                 update();
             }
@@ -95,21 +97,27 @@ public class NewServicePanelVisual extends javax.swing.JPanel {
         }
 
         String module = (String) jComboBoxModule.getSelectedItem();
-        String clientPckg = GWTProjectInfo.getClientPackage(module);
-        String serverPckg = GWTProjectInfo.getServerPackage(module);
-        String local = clientPckg + "." + subpackage + serviceName; // NOI18N
-        String remote = serverPckg + "." + subpackage + serviceName +  // NOI18N
-                "Impl"; // NOI18N
-        String async = clientPckg + "." +  // NOI18N
-                subpackage + serviceName + "Async"; // NOI18N
-        txtLocalIFace.setText(local);
-        txtAsyncIFace.setText(async);
-        txtRemoteImpl.setText(remote);
+        if (null != module) {
+            String clientPckg = GWTProjectInfo.getClientPackage(module);
+            String serverPckg = GWTProjectInfo.getServerPackage(module);
+            String local = clientPckg + "." + subpackage + serviceName; // NOI18N
+            String remote = serverPckg + "." + subpackage + serviceName + // NOI18N
+                    "Impl"; // NOI18N
+            String async = clientPckg + "." + // NOI18N
+                    subpackage + serviceName + "Async"; // NOI18N
+            txtLocalIFace.setText(local);
+            txtAsyncIFace.setText(async);
+            txtRemoteImpl.setText(remote);
+        } else {
+            txtLocalIFace.setText("");
+            txtAsyncIFace.setText("");
+            txtRemoteImpl.setText("");
+        }
         
         StringBuilder urlPattern = new StringBuilder();
         
         if(txtSubpackage.getText().length()>0){
-            urlPattern.append(txtSubpackage.getText().toLowerCase()+"/"); // NOI18N
+            urlPattern.append(txtSubpackage.getText().toLowerCase()).append("/"); // NOI18N
         }
         urlPattern.append(txtServiceName.getText().toLowerCase());
         
@@ -271,14 +279,17 @@ public class NewServicePanelVisual extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
     
     private class ChangeListener implements DocumentListener{
+        @Override
         public void insertUpdate(DocumentEvent arg0) {
             update();
         }
         
+        @Override
         public void removeUpdate(DocumentEvent arg0) {
             update();
         }
         
+        @Override
         public void changedUpdate(DocumentEvent arg0) {
             update();
         }
