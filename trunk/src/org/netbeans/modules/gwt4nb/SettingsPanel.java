@@ -413,7 +413,7 @@ public class SettingsPanel extends javax.swing.JPanel {
         jLabelGWTVersion.setLabelFor(jComboBoxGWTVersion);
         jLabelGWTVersion.setText(org.openide.util.NbBundle.getMessage(SettingsPanel.class, "SettingsPanel.jLabelGWTVersion.text")); // NOI18N
 
-        jComboBoxGWTVersion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1.5", "1.6", "1.7", "2.0", "2.1", "2.2", "2.3", "2.4", "2.5", " " }));
+        jComboBoxGWTVersion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1.5", "1.6", "1.7", "2.0", "2.1", "2.2", "2.3", "2.4", "2.5", "2.6", " " }));
         jComboBoxGWTVersion.setToolTipText(org.openide.util.NbBundle.getMessage(SettingsPanel.class, "SettingsPanel.jComboBoxGWTVersion.toolTipText")); // NOI18N
         jComboBoxGWTVersion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -450,7 +450,7 @@ public class SettingsPanel extends javax.swing.JPanel {
                         .add(jComboBoxGWTVersion, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jCheckBoxSuperDev)
-                        .addContainerGap(23, Short.MAX_VALUE))
+                        .addContainerGap(83, Short.MAX_VALUE))
                     .add(jTextFieldTestsArgs)))
             .add(jScrollPane1)
             .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)

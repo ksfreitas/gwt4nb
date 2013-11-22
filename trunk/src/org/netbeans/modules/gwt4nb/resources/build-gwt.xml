@@ -142,6 +142,7 @@ target, declare a new one with the same name in build.xml.
     <condition property="gwt.version.25" value="true">
         <or>
             <equals arg1="${gwt.version}" arg2="2.5"/>
+            <equals arg1="${gwt.version}" arg2="2.6"/>
         </or>
     </condition>
     
