@@ -383,10 +383,6 @@ public class GWTProjectInfo {
                             r.add(item.getTextContent());
                         }
                     }
-                    else
-                    {
-                        r.add("org.yournamehere.Main"); // NOI18N
-                    }
                 }
                 catch (Exception ex)
                 {
@@ -400,10 +396,10 @@ public class GWTProjectInfo {
             if (gm == null)
                 gm = "";
             String[] s = gm.split(" "); // NOI18N
-            if (s.length == 0)
-                r.add("org.yournamehere.Main"); // NOI18N
-            else
+            if (s.length > 0)
+            {
                 r.addAll(Arrays.asList(s));
+            }
         }
         return r;
     }
