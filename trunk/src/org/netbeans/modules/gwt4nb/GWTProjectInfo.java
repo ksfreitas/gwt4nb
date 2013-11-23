@@ -22,6 +22,7 @@ import java.io.OutputStream;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -37,12 +38,15 @@ import org.netbeans.api.project.SourceGroup;
 import org.netbeans.api.project.ProjectUtils;
 
 import org.netbeans.api.java.project.JavaProjectConstants;
+import org.netbeans.modules.gwt4nb.common.IOUtils;
+import org.netbeans.modules.gwt4nb.common.IOUtils.FileNameExtensionPredicate;
 
 
 import org.netbeans.spi.project.AuxiliaryConfiguration;
 
 import org.netbeans.spi.project.support.ant.EditableProperties;
 import org.openide.filesystems.FileObject;
+import org.openide.filesystems.FileUtil;
 import org.openide.util.Exceptions;
 
 import org.w3c.dom.Document;
@@ -50,18 +54,14 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-/**
- * Information about a GWT project (Maven or Ant).
- * 
- * @author Tomasz Slota
- * @author see https://github.com/gwt4nb/gwt4nb/
- */
+
 public class GWTProjectInfo {
     public static final String BUILD_GWT   = "build-gwt.xml"; // NOI18N
     public static final String PRJ_DIR =  "nbproject"; // NOI18N
     public static final String GWT_PROPERTIES = "gwt.properties"; // NOI18N
     public static final String RESOURCE_BASE = "org/netbeans/modules/gwt4nb/resources/"; // NOI18N
     public static final String WELCOME_FILE = "welcomeGWT.html"; // NOI18N
+    private static final String GWT_MODULE_EXTENSION = ".gwt.xml";
 
     private static Map<Project, WeakReference<GWTProjectInfo>> infos =
             new WeakHashMap<Project, WeakReference<GWTProjectInfo>>();
@@ -362,33 +362,9 @@ public class GWTProjectInfo {
     public List<String> getModules() {
         List<String> r = new ArrayList<String>();
         if (maven){
-            final FileObject projectDirectory = project.getProjectDirectory();
-            FileObject pom = projectDirectory.getFileObject("pom.xml"); // NOI18N
-            if (pom != null)
-            {
-                try
-                {
-                    Document pomDoc = GWT4NBUtil.parseXMLFile(pom);
-                    XPathFactory factory = XPathFactory.newInstance();
-                    XPath xp = factory.newXPath();
-                    NodeList nl = (NodeList) xp.evaluate(
-                            "//project/build/plugins/plugin[artifactId='gwt-maven-plugin']/configuration/modules/module", // NOI18N
-                            pomDoc,
-                            XPathConstants.NODESET);
-                    if (nl.getLength() > 0)
-                    {
-                        for (int i = 0; i < nl.getLength(); i++)
-                        {
-                            Node item = nl.item(i);
-                            r.add(item.getTextContent());
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Exceptions.printStackTrace(ex);
-                }
-            }
+            FileObject pom = project.getProjectDirectory().getFileObject("pom.xml"); // NOI18N
+            r.addAll(getModulesFromPOM(pom));
+            r.addAll(getModulesFromFileSystem(project));
         }
         else {
             String gm = readGWTPropertyAnt(project,
@@ -404,6 +380,83 @@ public class GWTProjectInfo {
         return r;
     }
 
+    /**
+     * Reads the available modules from the pom.xml at <pre>configuration/modules/module</pre>
+     * @param pom
+     * @return 
+     */
+    private Collection<String> getModulesFromPOM(FileObject pom) {
+        List<String> r=new ArrayList<String>();
+        if (pom != null)
+        {
+            try
+            {
+                Document pomDoc = GWT4NBUtil.parseXMLFile(pom);
+                XPathFactory factory = XPathFactory.newInstance();
+                XPath xp = factory.newXPath();
+                NodeList nl = (NodeList) xp.evaluate(
+                        "//project/build/plugins/plugin[artifactId='gwt-maven-plugin']/configuration/modules/module", // NOI18N
+                        pomDoc,
+                        XPathConstants.NODESET);
+                if (nl.getLength() > 0)
+                {
+                    for (int i = 0; i < nl.getLength(); i++)
+                    {
+                        Node item = nl.item(i);
+                        r.add(item.getTextContent());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Exceptions.printStackTrace(ex);
+            }
+        }
+        return r;
+    }
+    
+    /**
+     * Reads the available modules from the source and resource roots from the projects.
+     * 
+     * The logic for the auto-detection works like the gwt-maven-plugin.
+     */
+    private Collection<String> getModulesFromFileSystem(Project project) {
+        Sources sources = ProjectUtils.getSources(project);
+        
+        List<SourceGroup> sourceGroups = new ArrayList<SourceGroup>();
+        sourceGroups.addAll(Arrays.asList(sources.getSourceGroups(JavaProjectConstants.SOURCES_TYPE_JAVA)));
+        sourceGroups.addAll(Arrays.asList(sources.getSourceGroups(JavaProjectConstants.SOURCES_TYPE_RESOURCES)));
+
+        List<String> modules = new ArrayList<String>();
+        for (SourceGroup sourceGroup : sourceGroups) {
+            File sourceRootDir = FileUtil.toFile(sourceGroup.getRootFolder());
+            Collection<File> moduleFiles = IOUtils.findRecursive(sourceRootDir, new FileNameExtensionPredicate(GWT_MODULE_EXTENSION));
+
+            for (File moduleFile : moduleFiles) {
+                modules.add(getModuleNameFromFileName(moduleFile, sourceRootDir));
+            }
+        }
+        
+        return modules;
+    }
+
+    private String getModuleNameFromFileName(File file, File sourceRootDir) {
+        String fileName = file.getAbsolutePath();
+        //file=C:\Users\markiewb\Documents\NetBeansProjects\GWTGAEProjectSample\src\main\java\org\yournamehere\Main.gwt.xml
+        //sourceRootDir=C:\Users\markiewb\Documents\NetBeansProjects\GWTGAEProjectSample\src\main\java
+        
+        //keep only the path relative to src/main/java or src/main/resources
+        if (file.getAbsolutePath().startsWith(sourceRootDir.getAbsolutePath())) {
+            fileName = file.getAbsolutePath().substring(sourceRootDir.getAbsolutePath().length());
+        }
+        String path = fileName.substring(0, fileName.length() - GWT_MODULE_EXTENSION.length());
+        path = path.replace(File.separatorChar, '.');
+        if (path.startsWith(".") && path.length() > 1) {
+            path = path.substring(1);
+        }
+        return path;
+    }
+    
     /**
      * @return first directory for source files
      */
