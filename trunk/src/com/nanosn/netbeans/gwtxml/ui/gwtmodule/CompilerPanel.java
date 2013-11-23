@@ -211,7 +211,6 @@ public class CompilerPanel extends SectionInnerPanel {
         jButtonAddLinkersRemove = new javax.swing.JButton();
         jButtonAddLinkersAdd = new javax.swing.JButton();
 
-        jPanelDefinedLinkersModules.setBackground(new java.awt.Color(255, 255, 255));
         jPanelDefinedLinkersModules.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(CompilerPanel.class, "CompilerPanel.jPanelDefinedLinkersModules.border.title"))); // NOI18N
         jPanelDefinedLinkersModules.setName("Name of the modules to be Inherited:"); // NOI18N
 
@@ -268,7 +267,6 @@ public class CompilerPanel extends SectionInnerPanel {
                     .add(jButtonDefinedLinkersRemove)))
         );
 
-        jPanelAddLinkersModules.setBackground(new java.awt.Color(255, 255, 255));
         jPanelAddLinkersModules.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(CompilerPanel.class, "CompilerPanel.jPanelAddLinkersModules.border.title"))); // NOI18N
         jPanelAddLinkersModules.setName("Name of the modules to be Inherited:"); // NOI18N
 
@@ -312,7 +310,7 @@ public class CompilerPanel extends SectionInnerPanel {
                         .add(jButtonAddLinkersAdd)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                         .add(jButtonAddLinkersRemove))
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 643, Short.MAX_VALUE))
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 653, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanelAddLinkersModulesLayout.setVerticalGroup(
