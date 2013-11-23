@@ -373,8 +373,6 @@ public class ModulePanel extends SectionInnerPanel {
         jButtonStyleSheetsFilesRemove = new javax.swing.JButton();
         jButtonStyleSheetsFilesAdd = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 255, 255));
-
         jLabel1.setText(NbBundle.getMessage(ModulePanel.class, "RenTo")); // NOI18N
         jLabel1.setToolTipText(NbBundle.getMessage(ModulePanel.class, "CausesCompiler")); // NOI18N
 
@@ -390,7 +388,6 @@ public class ModulePanel extends SectionInnerPanel {
             }
         });
 
-        jPanelInheritedModules.setBackground(new java.awt.Color(255, 255, 255));
         jPanelInheritedModules.setBorder(javax.swing.BorderFactory.createTitledBorder(NbBundle.getMessage(ModulePanel.class, "InhMod"))); // NOI18N
         jPanelInheritedModules.setName("Name of the modules to be Inherited:"); // NOI18N
 
@@ -447,7 +444,6 @@ public class ModulePanel extends SectionInnerPanel {
                     .add(jButtonInheritsRemove)))
         );
 
-        jPanelEntryPoints.setBackground(new java.awt.Color(255, 255, 255));
         jPanelEntryPoints.setBorder(javax.swing.BorderFactory.createTitledBorder(NbBundle.getMessage(ModulePanel.class, "EntryP"))); // NOI18N
         jPanelEntryPoints.setName(""); // NOI18N
         jPanelEntryPoints.setPreferredSize(new java.awt.Dimension(0, 0));
@@ -501,14 +497,13 @@ public class ModulePanel extends SectionInnerPanel {
         jPanelEntryPointsLayout.setVerticalGroup(
             jPanelEntryPointsLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanelEntryPointsLayout.createSequentialGroup()
-                .add(jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
+                .add(jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanelEntryPointsLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jButtonEntryPointAdd)
                     .add(jButtonEntryPointRemove)))
         );
 
-        jPanelJavaScriptFiles.setBackground(new java.awt.Color(255, 255, 255));
         jPanelJavaScriptFiles.setBorder(javax.swing.BorderFactory.createTitledBorder(NbBundle.getMessage(ModulePanel.class, "JSFiles"))); // NOI18N
         jPanelJavaScriptFiles.setName("Name of the modules to be Inherited:"); // NOI18N
 
@@ -565,7 +560,6 @@ public class ModulePanel extends SectionInnerPanel {
                     .add(jButtonJavaScriptFilesRemove)))
         );
 
-        jPanelStyleSheetsFiles.setBackground(new java.awt.Color(255, 255, 255));
         jPanelStyleSheetsFiles.setBorder(javax.swing.BorderFactory.createTitledBorder(NbBundle.getMessage(ModulePanel.class, "SFiles"))); // NOI18N
         jPanelStyleSheetsFiles.setName("Name of the modules to be Inherited:"); // NOI18N
 
@@ -635,7 +629,7 @@ public class ModulePanel extends SectionInnerPanel {
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jTextFieldRenameTo, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE))
                     .add(jPanelJavaScriptFiles, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanelEntryPoints, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 614, Short.MAX_VALUE)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanelEntryPoints, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 620, Short.MAX_VALUE)
                     .add(jPanelStyleSheetsFiles, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
