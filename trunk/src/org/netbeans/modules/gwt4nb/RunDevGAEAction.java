@@ -176,10 +176,20 @@ public final class RunDevGAEAction extends ProjectAction {
                 DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(msg));
 
             } else {
-                FileObject buildFo = p.getProjectDirectory().
-                        getFileObject("build.xml"); // NOI18N
-
+                FileObject propertiesFile = p.getProjectDirectory().
+                getFileObject("nbproject/project.properties"); // NOI18N
+                
+                Properties properties = new Properties();
                 try {
+                    properties.load(propertiesFile.getInputStream());
+                    String buildFile = properties.getProperty(
+                            "buildfile"); // NOI18N
+                    if (buildFile == null) {
+                        buildFile = "build.xml"; // NOI18N
+                    }
+                    FileObject buildFo = p.getProjectDirectory().
+                        getFileObject(buildFile);
+
                     ActionUtils.runTarget(buildFo, new String[]{
                                 "gwt-devmode-on-appengine"}, null); // NOI18N
                 } catch (IllegalArgumentException ex) {
