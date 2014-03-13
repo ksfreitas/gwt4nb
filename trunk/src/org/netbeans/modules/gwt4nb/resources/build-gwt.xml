@@ -8,8 +8,8 @@ target, declare a new one with the same name in build.xml.
 -->
 
 <!-- Created with GWT4NB -->
-<project name="CromoSteel-gwt" default="-post-compile" basedir="..">
-    <description>Generates Javascript for CromoSteel.</description>
+<project name="__PROJECT_NAME__-gwt" default="-post-compile" basedir="..">
+    <description>Generates Javascript for __PROJECT_NAME__.</description>
     <property file="./nbproject/gwt.properties"/>
 
     <!--
