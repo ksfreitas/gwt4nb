@@ -47,7 +47,7 @@ public class JSNISupport extends LanguageProvider {
             if (token.text() != null
                     && TokenUtilities.startsWith(token.text(), START_FRAGMENT)
                     && TokenUtilities.endsWith(token.text(), END_FRAGMENT)) {
-                return LanguageEmbedding.create(embeddedLanguage, START_FRAGMENT.length(), END_FRAGMENT.length());
+                return LanguageEmbedding.create(embeddedLanguage, START_FRAGMENT.length(), END_FRAGMENT.length(), true);
             }
         }
 
@@ -57,6 +57,6 @@ public class JSNISupport extends LanguageProvider {
     private void initLanguage() {
         embeddedLanguage = MimeLookup.getLookup("text/javascript").lookup(Language.class);
 
-        checkNotNull(embeddedLanguage, "Can't find language for embedding");
+//        checkNotNull(embeddedLanguage, "Can't find language for embedding");
     }
 }
