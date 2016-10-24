@@ -83,10 +83,9 @@ import static org.netbeans.modules.gwt4nb.hints.Bundle.*;
     severity= Severity.WARNING,
     hintKind= Hint.Kind.ACTION,
     id="org.netbeans.modules.gwt4nb.hints.UnsupportedClass",
-    category="#org-netbeans-modules-java-hints/rules/hints/gwt")
+    category="gwt")
 @Messages({"DN_UnsupportedClass=Unsupported Class",
-    "DESC_UnsupportedClass=Unsupported Class",
-    "org-netbeans-modules-java-hints/rules/hints/gwt=GWT"})
+    "DESC_UnsupportedClass=Unsupported Class"})
 public class UnsupportedClass {
     private static final Set<String> jreWhitelist;
 
@@ -197,7 +196,11 @@ public class UnsupportedClass {
       return run(context.getInfo(), context.getPath());
     }
 
-    @Messages("ERR_UnsupportedClass=Class {0} not supported by the GWT")
+    @Messages({
+        "# {0} - classname",
+        "ERR_UnsupportedClass=Class {0} not supported by the GWT"
+    }
+    )
     private static List<ErrorDescription> run(final CompilationInfo info, final TreePath treePath){
         if (!hasGWT(info) || isUnitTest(info)) {
             return null;
