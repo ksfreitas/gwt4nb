@@ -413,7 +413,7 @@ public class SettingsPanel extends javax.swing.JPanel {
         jLabelGWTVersion.setLabelFor(jComboBoxGWTVersion);
         jLabelGWTVersion.setText(org.openide.util.NbBundle.getMessage(SettingsPanel.class, "SettingsPanel.jLabelGWTVersion.text")); // NOI18N
 
-        jComboBoxGWTVersion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1.5", "1.6", "1.7", "2.0", "2.1", "2.2", "2.3", "2.4", "2.5", "2.6", " " }));
+        jComboBoxGWTVersion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1.5", "1.6", "1.7", "2.0", "2.1", "2.2", "2.3", "2.4", "2.5", "2.6", "2.7", "2.8", " " }));
         jComboBoxGWTVersion.setToolTipText(org.openide.util.NbBundle.getMessage(SettingsPanel.class, "SettingsPanel.jComboBoxGWTVersion.toolTipText")); // NOI18N
         jComboBoxGWTVersion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

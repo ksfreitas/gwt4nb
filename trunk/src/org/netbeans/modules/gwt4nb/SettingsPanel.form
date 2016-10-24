@@ -588,7 +588,7 @@
             <Component class="javax.swing.JComboBox" name="jComboBoxGWTVersion">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="11">
+                  <StringArray count="13">
                     <StringItem index="0" value="1.5"/>
                     <StringItem index="1" value="1.6"/>
                     <StringItem index="2" value="1.7"/>
@@ -599,7 +599,9 @@
                     <StringItem index="7" value="2.4"/>
                     <StringItem index="8" value="2.5"/>
                     <StringItem index="9" value="2.6"/>
-                    <StringItem index="10" value=" "/>
+                    <StringItem index="10" value="2.7"/>
+                    <StringItem index="11" value="2.8"/>
+                    <StringItem index="12" value=" "/>
                   </StringArray>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
