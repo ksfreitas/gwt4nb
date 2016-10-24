@@ -13,32 +13,22 @@ import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
- * @author Chrizzly
+ * @author Chris2011
  */
 @ServiceProvider(service = LanguageProvider.class)
 public class JSNISupport extends LanguageProvider {
 
     private Language embeddedLanguage;
-    public static final String START_FRAGMENT = "/*-{";
-    public static final String END_FRAGMENT = "}-*/";
+    private static final String START_FRAGMENT = "/*-{";
+    private static final String END_FRAGMENT = "}-*/";
 
     @Override
     public Language<?> findLanguage(String mimeType) {
         return null;
     }
 
-    private <T> T checkNotNull(T reference, Object errorMessage) {
-        if (reference == null) {
-            throw new NullPointerException(String.valueOf(errorMessage));
-        }
-
-        return reference;
-    }
-
     @Override
     public LanguageEmbedding<?> findLanguageEmbedding(Token<?> token, LanguagePath languagePath, InputAttributes inputAttributes) {
-        System.out.println(END_FRAGMENT);
-
         if (embeddedLanguage == null) {
             initLanguage();
         }
@@ -56,7 +46,5 @@ public class JSNISupport extends LanguageProvider {
 
     private void initLanguage() {
         embeddedLanguage = MimeLookup.getLookup("text/javascript").lookup(Language.class);
-
-//        checkNotNull(embeddedLanguage, "Can't find language for embedding");
     }
 }
