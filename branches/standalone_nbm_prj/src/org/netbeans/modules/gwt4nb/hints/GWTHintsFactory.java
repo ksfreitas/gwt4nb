@@ -19,7 +19,6 @@
 
 package org.netbeans.modules.gwt4nb.hints;
 
-import org.netbeans.modules.gwt4nb.hints.GWTHintsProvider;
 import org.netbeans.api.java.source.CancellableTask;
 import org.netbeans.api.java.source.CompilationInfo;
 import org.netbeans.api.java.source.JavaSource.Phase;
