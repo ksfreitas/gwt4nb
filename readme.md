@@ -1,7 +1,5 @@
 # GWT4NB
 
-## GWT4NB 2.10.12 was released.
-
 The GWT4NB project aims to enable developers to take advantage of both: the superior support for creating Web Applications built into the NetBeans IDE and the power of GWT (Google Web Toolkit).
 
 ## Links
