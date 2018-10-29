@@ -30,6 +30,8 @@ import org.netbeans.spi.xml.cookies.DataObjectAdapters;
 import org.netbeans.spi.xml.cookies.ValidateXMLSupport;
 import org.openide.ErrorManager;
 import org.openide.filesystems.FileObject;
+import org.openide.filesystems.MIMEResolver;
+import org.openide.loaders.DataObject;
 import org.openide.loaders.DataObjectExistsException;
 import org.openide.loaders.MultiFileLoader;
 import org.openide.nodes.CookieSet;
@@ -37,16 +39,25 @@ import org.openide.nodes.Node;
 import org.openide.util.NbBundle;
 import org.xml.sax.InputSource;
 
+@NbBundle.Messages({
+    "LBL_GWT_XML_LOADER=Files of GWT"
+})
+@MIMEResolver.Registration(
+    resource = "GwtXmlResolver.xml",
+    displayName = "#LBL_GWT_XML_LOADER"
+)
+@DataObject.Registration(iconBase = "org/netbeans/modules/gwt4nb/gwticon.png", displayName = "#LBL_GWT_XML_LOADER", mimeType = "text/gwt+xml")
 public class GwtXmlDataObject extends XmlMultiViewDataObject {
     private static final long serialVersionUID = 1;
 
     private ModelSynchronizer modelSynchronizer;
     Module module;
 
-    public GwtXmlDataObject(FileObject pf, 
+    public GwtXmlDataObject(FileObject pf,
             MultiFileLoader loader) throws DataObjectExistsException,
             IOException {
         super(pf, loader);
+        registerEditor("text/gwt+xml", false);
         modelSynchronizer = new ModelSynchronizer(this);
         InputSource in = DataObjectAdapters.inputSource(this);
         CheckXMLCookie checkCookie = new CheckXMLSupport(in);
@@ -118,17 +129,19 @@ public class GwtXmlDataObject extends XmlMultiViewDataObject {
                     GwtXmlDataObject.class, "GENERAL")); // NOI18N
         }
 
+        @Override
         public org.netbeans.core.spi.multiview.MultiViewElement createElement() {
             GwtXmlDataObject dObj = (GwtXmlDataObject) getDataObject();
-//            if (type==TYPE_TOOLBAR) return new BookToolBarMVElement(dObj);
-//            else return new BookTreePanelMVElement(dObj);
+
             return new GwtxmlToolBarMultiViewElement(dObj);
         }
 
+        @Override
         public java.awt.Image getIcon() {
             return org.openide.util.ImageUtilities.loadImage("org/netbeans/modules/gwt4nb/gwticon.png"); // NOI18N
         }
 
+        @Override
         public String preferredID() {
             return "gwtxml_multiview_design"; // NOI18N
         }
@@ -142,18 +155,19 @@ public class GwtXmlDataObject extends XmlMultiViewDataObject {
                     GwtXmlDataObject.class, "COMPILER")); // NOI18N
         }
 
+        @Override
         public org.netbeans.core.spi.multiview.MultiViewElement createElement() {
             GwtXmlDataObject dObj = (GwtXmlDataObject) getDataObject();
-//            if (type==TYPE_TOOLBAR) return new BookToolBarMVElement(dObj);
-//            else return new BookTreePanelMVElement(dObj);
             return new GwtxmlToolBarMultiViewElement(dObj);
         }
 
+        @Override
         public java.awt.Image getIcon() {
             return org.openide.util.ImageUtilities.loadImage(
                     "org/netbeans/modules/gwt4nb/gwticon.png"); // NOI18N
         }
 
+        @Override
         public String preferredID() {
             return "gwtxml_multiview_compiler"; // NOI18N
         }
@@ -169,7 +183,6 @@ public class GwtXmlDataObject extends XmlMultiViewDataObject {
         return null;
     }
 
-    // <editor-fold desc="Model Synchronizer Class">
     private class ModelSynchronizer extends XmlMultiViewDataSynchronizer {
         private static final long serialVersionUID = 1;
 
@@ -177,10 +190,12 @@ public class GwtXmlDataObject extends XmlMultiViewDataObject {
             super(dataObject, 500);
         }
 
+        @Override
         protected boolean mayUpdateData(boolean allowDialog) {
             return true;
         }
 
+        @Override
         protected void updateDataFromModel(Object model, org.openide.filesystems.FileLock lock, boolean modify) {
             if (model == null) {
                 return;
@@ -199,6 +214,7 @@ public class GwtXmlDataObject extends XmlMultiViewDataObject {
             }
         }
 
+        @Override
         protected Object getModel() {
             try {
                 return getModule();
@@ -209,6 +225,7 @@ public class GwtXmlDataObject extends XmlMultiViewDataObject {
             }
         }
 
+        @Override
         protected void reloadModelFromData() {
             try {
                 parseDocument();
@@ -218,5 +235,4 @@ public class GwtXmlDataObject extends XmlMultiViewDataObject {
             }
         }
     }
-    // </editor-fold>
 }

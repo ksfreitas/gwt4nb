@@ -292,18 +292,6 @@
 
         </folder>
     </folder>
-    <folder name="Services">
-        <folder name="MIMEResolver">
-            <file name="GwtXmlResolver.xml" url="nbresloc:/com/nanosn/netbeans/gwtxml/GwtXmlResolver.xml">
-                <attr name="SystemFileSystem.localizingBundle" stringvalue="com.nanosn.netbeans.gwtxml.Bundle"/>
-                <attr name="position" intvalue="200"/>
-            </file>
-            <file name="GwtXmlResolver.xml" url="nbresloc:/com/nanosn/netbeans/gwtxml/GwtXmlResolver.xml">
-                <attr name="SystemFileSystem.localizingBundle" stringvalue="com.nanosn.netbeans.gwtxml.Bundle"/>
-                <attr name="position" intvalue="200"/>
-            </file>
-        </folder>
-    </folder>
     <folder name="xml">
         <folder name="entities">
             <folder name="Google_Inc_">
